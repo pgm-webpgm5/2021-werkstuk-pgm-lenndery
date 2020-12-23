@@ -1,20 +1,20 @@
 import React from 'react';
-import { TouchableWithoutFeedback, View, StyleSheet, Image, Text } from 'react-native';
-import { AppText, AvatarBadge, H4, Strong } from '.';
+import { TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image, Text } from 'react-native';
+import { AppText, AvatarBadge, H4, H5, Strong } from '.';
 import { colors, circular } from '../config/defaultStyles';
 import { rem } from '../utils';
 
-function ChannelCard(props) {
+function ChannelCard({ onPress }) {
     return (
-        <TouchableWithoutFeedback>
+        <TouchableOpacity onPress={onPress}>
             <View style={ styles.container }>
                 <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent="3" uri="https://img1.looper.com/img/gallery/the-entire-story-of-the-office-finally-explained/intro-1565722485.jpg" />
                 <View style={ styles.channelInfo }>
-                    <H4 style={ styles.channelName }># the-office-fanclub</H4>
+                    <H5 style={ styles.channelName }># the-office-fanclub</H5>
                     <AppText style={ styles.channelLastMessagePreview }><Strong>{'You'}:</Strong> {('If I don\'t have some cake soon, I might die').substring(0, 30)}...</AppText>
                 </View>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
 }
 

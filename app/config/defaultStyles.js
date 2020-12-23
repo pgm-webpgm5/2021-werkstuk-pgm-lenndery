@@ -1,8 +1,12 @@
+export const defaultFontSize = 16;
+
 export const colors = {
     primary: '#A31E2D',
     secondary: '',
     black: 'black',
-    background: '#F6F2F2',
+    background: '#292929',
+    
+    defaultText: 'white',
     
     // light mode
     grey200: "#e9ecef",
@@ -15,11 +19,25 @@ export const colors = {
     grey900: "#212529",
     
     // dark mode
-    dark300: '#666b6a',
+    dark200: '#747878',
+    dark300: '#3C3E3E',
     dark400: '#333333',
     dark500: '#292929',
     dark600: '#211c1c',
     dark700: '#1f1f1f',
+}
+
+export const screenHeader = {
+    headerTitleStyle: {
+        color: 'white',
+    },
+    headerStyle: {
+        backgroundColor: colors.dark700
+    },
+    headerBackButtonStyle: {
+        backgroundColor: 'red'
+    },
+    headerTintColor: 'white',
 }
 
 /**

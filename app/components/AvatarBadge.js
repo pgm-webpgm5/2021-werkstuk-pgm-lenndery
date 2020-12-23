@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
         top: -6,
         right: -10,
         alignSelf: 'center',
-        minWidth: 35,
+        minWidth: 31,
+        height: 30,
         paddingHorizontal: rem(.4),
-        paddingVertical: rem(.2),
+        paddingVertical: rem(.1),
         backgroundColor: colors.primary,
         borderRadius: 1000,
         ...border(4, 'solid', colors.dark500)

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
+import { colors } from '../config/defaultStyles';
 import { rem } from '../utils';
 
 function AppText({ children, style }) {
@@ -10,7 +11,8 @@ function AppText({ children, style }) {
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: rem(1)
+        fontSize: rem(1),
+        color: colors.defaultText
     }
 })
 
