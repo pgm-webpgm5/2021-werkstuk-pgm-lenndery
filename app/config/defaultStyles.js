@@ -1,7 +1,10 @@
+import { vw } from '../utils'
+
 export const defaultFontSize = 16;
 
 export const colors = {
     primary: '#A31E2D',
+    primaryBright: '#DC0000',
     secondary: '',
     black: 'black',
     background: '#292929',
@@ -25,6 +28,7 @@ export const colors = {
     dark500: '#292929',
     dark600: '#211c1c',
     dark700: '#1f1f1f',
+    dark800: '#191919',
 }
 
 export const screenHeader = {
@@ -40,6 +44,15 @@ export const screenHeader = {
     headerTintColor: 'white',
 }
 
+export const logo = {
+    height: 50,
+    width: vw(50),
+}
+
+export const textCenter = {
+    textAlign: 'center'
+}
+
 /**
  * Create a round element. The dimensions and borderRadius depend on the given parameter
  * @param {number} size The actual dimensions of the component
@@ -49,6 +62,22 @@ export const circular = (size) => {
         width: size,
         height: size,
         borderRadius: size
+    }
+}
+
+/**
+ * 
+ * @param {number} borderTopLeftRadius 
+ * @param {number} borderTopRightRadius 
+ * @param {number} borderBottomRightRadius 
+ * @param {number} borderBottomLeftRadius 
+ */
+export const borderRadius = (borderTopLeftRadius, borderTopRightRadius, borderBottomRightRadius, borderBottomLeftRadius) => {
+    return {
+        borderTopLeftRadius: borderTopLeftRadius,
+        borderTopRightRadius: borderTopRightRadius,
+        borderBottomRightRadius: borderBottomRightRadius,
+        borderBottomLeftRadius: borderBottomLeftRadius
     }
 }
 

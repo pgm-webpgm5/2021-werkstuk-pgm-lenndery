@@ -32,27 +32,11 @@ export const vh = (percent) => {
 
 /**
  * 
- * @param {number} borderTopLeftRadius 
- * @param {number} borderTopRightRadius 
- * @param {number} borderBottomRightRadius 
- * @param {number} borderBottomLeftRadius 
- */
-export const borderRadius = (borderTopLeftRadius, borderTopRightRadius, borderBottomRightRadius, borderBottomLeftRadius) => {
-    return {
-        borderTopLeftRadius: borderTopLeftRadius,
-        borderTopRightRadius: borderTopRightRadius,
-        borderBottomRightRadius: borderBottomRightRadius,
-        borderBottomLeftRadius: borderBottomLeftRadius
-    }
-}
-
-/**
- * 
  * @param {number|string} date A date as milliseconds or a string, to convert
  */
 export const messageRecievedDate = (date) => dayjs(date).calendar(null, {
     sameDay: '[Today at] h:mm', // The same day ( Today at 2:30 AM )
     lastDay: '[Yesterday] dd h:mm', // The day before ( Yesterday at 2:30 AM )
     lastWeek: 'dd h:mm', // Last week ( Last Monday at 2:30 AM )
-    sameElse: 'DD.MM h:mm' // Everything else ( 7/10/2011 )
+    sameElse: 'DD MMM h:mm' // Everything else ( 7/10/2011 )
 })

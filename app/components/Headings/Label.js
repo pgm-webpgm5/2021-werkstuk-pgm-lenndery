@@ -12,7 +12,8 @@ function Label({ children, style }) {
 const styles = StyleSheet.create({
     label: {
         color: 'grey',
-        fontWeight: '700'
+        fontWeight: '700',
+        textTransform: 'uppercase'
     }
 })
 

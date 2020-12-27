@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Toast, { BaseToast } from 'react-native-toast-message';
-import { borderRadius, rem } from '../utils';
-import { colors } from './defaultStyles';
+import { rem } from '../utils';
+import { colors, borderRadius } from './defaultStyles';
 
 const toastBorderRadius = 10;
 export const toastConfig = {
@@ -24,7 +24,7 @@ export const toastConfig = {
                 ...borderRadius(0, toastBorderRadius, toastBorderRadius, 0)
             }}
             text1Style={{
-                fontSize: 15,
+                fontSize: rem(1),
                 fontWeight: 'semibold',
                 color: 'white'
             }}

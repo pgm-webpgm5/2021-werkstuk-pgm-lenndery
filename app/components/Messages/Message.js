@@ -5,10 +5,17 @@ import Toast from 'react-native-toast-message';
 import * as Animatable from 'react-native-animatable';
 
 import { Small, AppText } from '..';
-import { colors } from '../../config/defaultStyles';
-import { borderRadius, rem, messageRecievedDate, vh } from '../../utils';
+import { colors, borderRadius } from '../../config/defaultStyles';
+import { rem, messageRecievedDate, vh } from '../../utils';
+import { useFirestoreQuery } from '../../firebase/useFirestoreQuery';
 
-function Message({ data: { content, sender_name, timestamp_ms, gifs, photos }, isSender = false, style = {} }) {
+function Message({ data: { content, sender, sender_name, timestamp, gifs, photos }, onPress, isSender = false, style = {} }) {
+    const { data, status } = useFirestoreQuery(fs => fs.doc(`users/${sender}`))
+    const [ username, setUsername ] = useState(sender_name || sender)
+    
+    useEffect(() => {
+        status === 'success' && setUsername(data.username)
+    }, [status])
     
     const copyToClipboard = text => {
         Clipboard.setString(text)
@@ -20,9 +27,9 @@ function Message({ data: { content, sender_name, timestamp_ms, gifs, photos }, i
     
     return (
         <View style={[ styles.container, style ]}>
-            <TouchableOpacity onLongPress={() => copyToClipboard(content)} activeOpacity={.6}>
+            <TouchableOpacity onPress={onPress} onLongPress={() => copyToClipboard(content)} activeOpacity={.6}>
                 <>
-                    { !isSender && <Small style={[ styles.messageSenderName ]}>{ sender_name }・{ messageRecievedDate(timestamp_ms) }</Small>}
+                    { !isSender && <Small style={[ styles.messageSenderName ]}>{ username }・{ messageRecievedDate(timestamp*1000) }</Small>}
                     
                     { gifs && gifs.map((g, index) => <Image key={ index } style={{ width: 150, height: 150, borderRadius: 12 }} source={{ uri: 'https://media.giphy.com/media/cXblnKXr2BQOaYnTni/source.gif' }} />) }
                     { photos && photos.map((g, index) => <Image key={ index } style={{ width: 150, height: 150, borderRadius: 12 }} source={{ uri: 'https://media.giphy.com/media/cXblnKXr2BQOaYnTni/source.gif' }} />) }
@@ -38,7 +45,7 @@ const messageBorderRadius = 12;
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: rem(1)
+        marginTop: rem(1)
     },
     messageSenderName: {
         marginBottom: rem(.4),

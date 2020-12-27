@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
+import { AppText } from '..';
 import { rem } from '../../utils'
 
 function H2 ({ children }) {
     return (
-        <Text style={styles.font}>{ children }</Text>
+        <AppText style={styles.font}>{ children }</AppText>
     );
 }
 

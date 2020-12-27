@@ -1,21 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, View, FlatList } from 'react-native';
+import { Text, StyleSheet, View, FlatList, LogBox, KeyboardAvoidingView, Platform, StatusBar, AppState } from 'react-native';
 import Toast, { BaseToast } from 'react-native-toast-message';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createStackNavigator, HeaderBackButton, HeaderTitle } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-import { colors, screenHeader } from './app/config/defaultStyles';
+import { colors } from './app/config/defaultStyles';
 import { toastConfig } from './app/config/toastConfig';
-import { SplashScreen, ChannelOverviewScreen, ChannelMessagesScreen } from './app/screens';
-import { ChannelCard, Screen, Message, Wrapper } from './app/components';
+import { SplashScreen, ChannelOverviewScreen, ChannelMessagesScreen, LoginScreen, WelcomeScreen, RegisterScreen } from './app/screens';
+import { LoggedInCheck, AvoidKeyboard, H2 } from './app/components';
+import { IntroductionNavigator, MainNavigator, MainTabNavigator } from './app/navigators';
+import { useAuth, AuthProvider } from './app/firebase/auth';
+import { vh } from './app/utils';
+import { useKeyboardHeight } from './app/hooks';
+import { useFirestoreCrud } from './app/firebase/useFirestoreCrud';
 
-export default function App() {    
+LogBox.ignoreAllLogs(true);
+
+LogBox.ignoreAllLogs(['Setting a timer']);
+    console.warn = message => {
+    if (message.indexOf('Setting a timer') <= -1) {
+        console.warn(message);
+    }
+};
+
+export default function App() {
+    return (
+        <AuthProvider>
+            <AppContent/>
+        </AuthProvider>
+    )
+}
+
+function AppContent() {    
     const [ loading, setLoading ] = useState(true);
-        
+    const { maxHeight } = useKeyboardHeight();
+    const { user } = useAuth()
+    const { updateDocument, state: updateUserActivityState } = useFirestoreCrud(`users/${ user && user.uid }`)
+    
     useEffect(() => {
-        setTimeout(() => {
+        AppState.addEventListener('change', appStateHandler);
+        // AppState.addEventListener('focus', appStateHandler);
+        // AppState.addEventListener('blur', appStateHandler);
+        return () => {
+            AppState.removeEventListener("change", appStateHandler);
+            // AppState.removeEventListener("focus", appStateHandler);
+            // AppState.removeEventListener("blur", appStateHandler);
+        }
+    }, [])
+    
+    const appStateHandler = state => {
+        const newActivityState = state == 'active' ? {
+            activity: state,
+            last_activity: new Date()
+        } : {
+            activity: state,
+        }
+        updateDocument(newActivityState)
+        console.log({ state })
+    }
+    
+    console.log({ updateUserActivityState })
+    
+    useEffect(() => {
+        const timeout = setTimeout(() => {
             setLoading(false)
         }, 3000)
+        return () => timeout
     }, [])
     
     /**
@@ -23,31 +72,22 @@ export default function App() {
      * get index, check if message next index is from same user
      * combine if so and ignore following
      */
-    
-    const Stack = createStackNavigator();
-    
-    const StackNavigator = () => (
-        <Stack.Navigator /*initialRouteName="Login" */>
-            <Stack.Screen name="channels" component={ChannelOverviewScreen} options={{
-                // headerShown: false
-                ...screenHeader,
-            }}/>
-            <Stack.Screen name="channelMessages" component={ChannelMessagesScreen} options={{
-                // headerShown: false
-                ...screenHeader
-            }}/>
-        </Stack.Navigator>
-    )
-    
+
     return (
-        <View style={styles.container}>
+        <View style={[ styles.container, { maxHeight: maxHeight }]}>
             <Toast config={ toastConfig } style={{ zIndex: 1000 }} ref={(ref) => Toast.setRef(ref)} />
             
             { loading ? 
                 <SplashScreen/>:
-                <NavigationContainer>
-                    <StackNavigator />
-                </NavigationContainer>
+                <LoggedInCheck is={
+                    <NavigationContainer>
+                        <MainTabNavigator />
+                    </NavigationContainer>
+                } isNot={
+                    <NavigationContainer>
+                        <IntroductionNavigator />
+                    </NavigationContainer>
+                }/>
             }
         </View>
     );
