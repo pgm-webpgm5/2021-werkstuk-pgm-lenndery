@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, View, FlatList, LogBox, KeyboardAvoidingView, Platform, StatusBar, AppState } from 'react-native';
 import Toast, { BaseToast } from 'react-native-toast-message';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 
 import { colors } from './app/config/defaultStyles';
 import { toastConfig } from './app/config/toastConfig';
@@ -80,11 +80,11 @@ function AppContent() {
             { loading ? 
                 <SplashScreen/>:
                 <LoggedInCheck is={
-                    <NavigationContainer>
+                    <NavigationContainer theme={ DarkTheme }>
                         <MainTabNavigator />
                     </NavigationContainer>
                 } isNot={
-                    <NavigationContainer>
+                    <NavigationContainer theme={ DarkTheme }>
                         <IntroductionNavigator />
                     </NavigationContainer>
                 }/>

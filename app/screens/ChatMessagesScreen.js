@@ -6,7 +6,7 @@ import { ChatForm, Message, Screen, Wrapper } from '../components';
 import { useAuth } from '../firebase/auth';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { useFirestoreQuery, useLazyFirestoreQuery } from '../firebase/useFirestoreQuery';
-import { rem } from '../utils';
+import { rem, vh } from '../utils';
 import LoadingScreen from './LoadingScreen';
 
 function ChatMessagesScreen(props) {
@@ -25,7 +25,7 @@ function ChatMessagesScreen(props) {
     const handleNewChat = chatData => {
         if (chatData) {
             setChatId(chatData.id)
-            fetchMessages(fs => fs.collection(`chats/${chatData.id}/messages`).orderBy("timestamp", "asc"));
+            fetchMessages(fs => fs.collection(`chats/${chatData.id}/messages`).orderBy("timestamp", "desc"));
         } else {
             addNewChat({participants: [
                 user.uid,
@@ -43,7 +43,7 @@ function ChatMessagesScreen(props) {
     
     useEffect(() => {
         if (addNewChatStatus === 'success') { 
-            fetchMessages(fs => fs.collection(`chats/${addNewChatData.id}/messages`).orderBy("timestamp", "asc"));
+            fetchMessages(fs => fs.collection(`chats/${addNewChatData.id}/messages`).orderBy("timestamp", "desc"));
             refetchChatData()
         }
     }, [addNewChatStatus])
@@ -55,13 +55,16 @@ function ChatMessagesScreen(props) {
     if (!data) {
         return <LoadingScreen />
     } else return (
-        <Screen ignore>
-            <Wrapper style={{ paddingHorizontal: rem(1) }}> 
+        <Screen ignore style={{ maxHeight: '100%' }}>
+            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0, maxHeight: '100%' }}> 
                 <FlatList 
+                    style={{ height: '100%', padding: rem(1), paddingTop: rem(.5) }}
+                    contentContainerStyle={{ paddingBottom: rem(1) }}
                     data={ messagesData }
                     keyExtractor={ m => m.id }
                     inverted
                     refreshing={ refreshing }
+                    showsVerticalScrollIndicator={ false }
                     renderItem={({ item }) =>
                         item.content && <Message
                             data={ item }
@@ -69,7 +72,7 @@ function ChatMessagesScreen(props) {
                         />
                     }
                 />
-                <ChatForm messagePath={`chats/${chatId}/messages`} />
+                <ChatForm messagePath={`chats/${chatId}/messages`} containerStyle={{ paddingTop: rem(1), paddingHorizontal: rem(1) }}/>
             </Wrapper>
         </Screen>
     );

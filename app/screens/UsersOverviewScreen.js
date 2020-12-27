@@ -19,13 +19,15 @@ function UsersOverviewScreen() {
 
     useEffect(() => {
         isFocused && updateUserActivity({
-            activity: 'active'
+            activity: 'active',
+            last_activity: new Date()
         })
     }, [isFocused])
     
     return (
         <Screen ignore>
             <FlatList 
+                style={{ height: '100%' }}
                 data={ data }
                 keyExtractor={ u => u.id }
                 refreshing={ refreshing }

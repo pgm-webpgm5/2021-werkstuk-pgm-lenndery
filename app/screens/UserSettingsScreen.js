@@ -21,6 +21,7 @@ function UserSettingsScreen(props) {
         logout()
         updateUserActivity({
             activity: 'logged_out',
+            last_activity: new Date()
         })
     }
     

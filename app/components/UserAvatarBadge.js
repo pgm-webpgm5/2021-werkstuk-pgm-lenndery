@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableHighlight, Image, View, StyleSheet, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import dayjs from 'dayjs'
@@ -6,11 +6,27 @@ import dayjs from 'dayjs'
 import { colors, circular, border, borderRadius } from '../config/defaultStyles';
 import { rem } from '../utils';
 import { storage } from '../firebase/firebase'
+import {  } from 'react/cjs/react.development';
 
 function AvatarBadge({ uri, badgeContent = '', status = 'background', lastActive = 0, style = {} }) { 
+    const [ lastActiveMinutes, setLastActiveMinutes ] = useState(0);
     
-    lastActive = dayjs(lastActive*1000)
-    const lastActiveMinutes = lastActive.diff(dayjs(), 'minute')*-1
+    const calculateLastActiveMinutes = () => {
+        const mint = dayjs(lastActive*1000)
+        return mint.diff(dayjs(), 'minute')*-1
+    }
+    
+    useEffect(() => {
+        const result = calculateLastActiveMinutes()
+        setLastActiveMinutes(result);
+        
+        const unsubscribe = setInterval(() => {
+            const result = calculateLastActiveMinutes()
+            setLastActiveMinutes(result);
+        }, 2000);
+        
+        return () => clearInterval(unsubscribe);
+    }, [])
 
     return (
         <TouchableHighlight>
@@ -24,7 +40,7 @@ function AvatarBadge({ uri, badgeContent = '', status = 'background', lastActive
                 }
                 { lastActiveMinutes < 30 && <View style={[ styles.badge, badgeStyle[status] ]}>
                     {status !== 'active' && <Text style={[ styles.badgeContent, badgeTextStyle[status] ]}>
-                        { lastActiveMinutes }m
+                        { lastActiveMinutes == 0 ? 1 : lastActiveMinutes }m
                     </Text>}
                 </View> }
             </View>

@@ -6,6 +6,13 @@ import { screenHeader } from '../config/defaultStyles';
 const Stack = createStackNavigator();
 
 function UsersNavigator(props) {
+    
+    const forFade = ({ current, closing }) => ({
+        cardStyle: {
+            opacity: current.progress,
+        },
+    });
+
     return (
         <>
             <Stack.Navigator>

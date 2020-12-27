@@ -10,7 +10,7 @@ import FormField from './Form/FormField';
 import { rem } from '../utils';
 import { colors } from '../config/defaultStyles';
 
-function ChatForm({ messagePath }) {
+function ChatForm({ messagePath, containerStyle }) {
     const { user } = useAuth();
     const { state, deleteDocument, addDocument } = useFirestoreCrud(messagePath);
     
@@ -27,7 +27,7 @@ function ChatForm({ messagePath }) {
     return (
         <Form
             onSubmit={handleMessageSend}
-            style={ styles.form }
+            style={[ styles.form, containerStyle ]}
         >
             <FormField
                 name="message"
