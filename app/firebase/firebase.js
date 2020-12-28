@@ -5,7 +5,7 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const app =  firebase.initializeApp({
-
+  
 });
 
 export const auth = app.auth();

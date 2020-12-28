@@ -6,12 +6,14 @@ import * as Animatable from 'react-native-animatable';
 
 import { Small, AppText } from '..';
 import { colors, borderRadius } from '../../config/defaultStyles';
-import { rem, messageRecievedDate, vh } from '../../utils';
+import { rem, messageRecievedDate, vh, vw } from '../../utils';
 import { useFirestoreQuery } from '../../firebase/useFirestoreQuery';
+import { useFirebaseStorage } from '../../firebase/useFirebaseStorage';
 
-function Message({ data: { content, sender, sender_name, timestamp, gifs, photos }, onPress, isSender = false, style = {} }) {
+function Message({ data: { content, sender, sender_name, timestamp, gifs, photos, type }, onPress, isSender = false, style = {} }) {
     const { data, status } = useFirestoreQuery(fs => fs.doc(`users/${sender}`))
     const [ username, setUsername ] = useState(sender_name || sender)
+    const { getDownloadURL, state: { data: imageUri } } = useFirebaseStorage(content)
     
     useEffect(() => {
         status === 'success' && setUsername(data.username)
@@ -25,6 +27,10 @@ function Message({ data: { content, sender, sender_name, timestamp, gifs, photos
         });
     }
     
+    useEffect(() => {
+        type === 'photo' && getDownloadURL()  
+    }, [])
+    
     return (
         <View style={[ styles.container, style ]}>
             <TouchableOpacity onPress={onPress} onLongPress={() => copyToClipboard(content)} activeOpacity={.6}>
@@ -34,7 +40,10 @@ function Message({ data: { content, sender, sender_name, timestamp, gifs, photos
                     { gifs && gifs.map((g, index) => <Image key={ index } style={{ width: 150, height: 150, borderRadius: 12 }} source={{ uri: 'https://media.giphy.com/media/cXblnKXr2BQOaYnTni/source.gif' }} />) }
                     { photos && photos.map((g, index) => <Image key={ index } style={{ width: 150, height: 150, borderRadius: 12 }} source={{ uri: 'https://media.giphy.com/media/cXblnKXr2BQOaYnTni/source.gif' }} />) }
                     
-                    { content && <AppText style={[ styles.message, isSender && stylesIsSender.message ]}>{ content }</AppText>}
+                    { content && type !== 'photo' && <AppText style={[ styles.message, isSender && stylesIsSender.message ]}>{ content }</AppText>}
+                    { type === 'photo' && <View style={[ type !== 'photo' && styles.message, isSender && stylesIsSender.message, type === 'photo' & styles.photoMessage ]}>
+                        <Image style={[ styles.photo, isSender && stylesIsSender.photo]} source={{ uri: imageUri }} />
+                    </View>}
                 </>
             </TouchableOpacity>
         </View>
@@ -69,10 +78,26 @@ const styles = StyleSheet.create({
         backgroundColor: colors.dark300,
         ...borderRadius(5, messageBorderRadius, messageBorderRadius, messageBorderRadius)
     },
+    photoMessage: {
+        padding: 0,
+        paddingVertical: 0,
+        paddingHorizontal: 0,
+        overflow: 'hidden',
+        ...borderRadius(5, messageBorderRadius, messageBorderRadius, messageBorderRadius)
+    },
+    photo: {
+        width: 200,
+        height: 200,
+        ...borderRadius(5, messageBorderRadius, messageBorderRadius, messageBorderRadius)
+    }
 })
 
 const stylesIsSender = StyleSheet.create({
     message: {
+        alignSelf: 'flex-end',
+        ...borderRadius(messageBorderRadius, 5, messageBorderRadius, messageBorderRadius)
+    },
+    photo: {
         alignSelf: 'flex-end',
         ...borderRadius(messageBorderRadius, 5, messageBorderRadius, messageBorderRadius)
     }

@@ -7,6 +7,8 @@ import { storage } from './firebase';
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case "idle":
+            return { status: "idle", data: undefined, error: undefined };
         case "loading":
         return { status: "loading", data: undefined, error: undefined };
         case "success":
@@ -106,6 +108,7 @@ export const useFirebaseStorage = (storagePath = '') => {
                     path: composedPath,
                     uri: await uri
                 }})
+                dispatch({ type: "idle" });
             })         
         } catch (err) {
             dispatch({ type: "error", payload: returnedState });

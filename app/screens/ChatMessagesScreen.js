@@ -15,9 +15,10 @@ function ChatMessagesScreen(props) {
     const { params } = useRoute();
     const { user } = useAuth()
     const { data, refetch: refetchChatData } = useFirestoreQuery(fs => fs.collection('chats')
-        .where("participants", "in", 
-            [[user && user.uid, params.actor]],
-        )
+        .where("participants", "in", [
+            [ user && user.uid, params.actor ], 
+            [ params.actor, user && user.uid ],
+        ])
     );
     const { addDocument: addNewChat, state: { data: addNewChatData, status: addNewChatStatus } } = useFirestoreCrud(`chats`)
     const { fetchQuery: fetchMessages, data: messagesData } = useLazyFirestoreQuery();
@@ -49,8 +50,8 @@ function ChatMessagesScreen(props) {
     }, [addNewChatStatus])
     
     useEffect(() => {
-        messagesData && console.log(messagesData) 
-    }, [messagesData])
+        data && console.log('CHATS DATA', { data }) 
+    }, [data])
     
     if (!data) {
         return <LoadingScreen />
@@ -72,7 +73,13 @@ function ChatMessagesScreen(props) {
                         />
                     }
                 />
-                <ChatForm messagePath={`chats/${chatId}/messages`} containerStyle={{ paddingTop: rem(1), paddingHorizontal: rem(1) }}/>
+                <ChatForm 
+                    messagePath={`chats/${chatId}/messages`} 
+                    containerStyle={{ 
+                        paddingTop: rem(1), 
+                        paddingHorizontal: rem(1),
+                    }}
+                />
             </Wrapper>
         </Screen>
     );

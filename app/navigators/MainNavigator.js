@@ -93,28 +93,28 @@ function MainNavigator(props) {
                 swipeDirection="down"
             >
                 <View style={ styles.modalContainer }> 
-                        <Wrapper style={ styles.modalWrapper }>
-                            <H4 style={{ marginBottom: rem(1) }}>New channel</H4>
-                            <Form
-                                onSubmit={handleChannelCreation}
-                            >
-                                <FormImageInput 
-                                    name="avatar"
-                                    style={{ alignSelf: 'center', marginBottom: rem(1) }}
-                                />
-                                <FormField 
-                                    name="channelName"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    keyboardType="email-address"
-                                    placeholder="Channel name"
-                                    textContextType="emailAddress"
-                                />
-                                <FormSubmit title="Create channel"/>
-                            </Form>
-                            {/* <AppButton onPress={() => setModal(!modal)} title="Create channel"/> */}
-                            <AppButton theme="simple" labelStyle={{ color: 'white' }} onPress={() => setModal(false)} title="Discard"/>
-                        </Wrapper>
+                    <Wrapper style={ styles.modalWrapper }>
+                        <H4 style={{ marginBottom: rem(1) }}>New channel</H4>
+                        <Form
+                            onSubmit={handleChannelCreation}
+                        >
+                            <FormImageInput 
+                                name="avatar"
+                                style={{ alignSelf: 'center', marginBottom: rem(1) }}
+                            />
+                            <FormField 
+                                name="channelName"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                keyboardType="email-address"
+                                placeholder="Channel name"
+                                textContextType="emailAddress"
+                            />
+                            <FormSubmit title="Create channel"/>
+                        </Form>
+                        {/* <AppButton onPress={() => setModal(!modal)} title="Create channel"/> */}
+                        <AppButton theme="simple" labelStyle={{ color: 'white' }} onPress={() => setModal(false)} title="Discard"/>
+                    </Wrapper>
                 </View>
             </Modal>
        </> 

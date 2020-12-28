@@ -11,10 +11,6 @@ function ChannelOverviewScreen(props) {
     const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState(false)
     const { data, refetch } = useFirestoreQuery(fs => fs.collection('channels'))
-    
-    useEffect(() => {
-        console.log(data)
-    }, [data])
         
     return (
         <Screen ignore>

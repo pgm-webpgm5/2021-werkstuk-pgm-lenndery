@@ -59,8 +59,8 @@ function UserSettingsScreen(props) {
         <Screen>
             <Wrapper>                
                 <ImageInput
-                    style={ styles.userAvatar } 
-                    sourceUri={ selectedImage } 
+                    style={ styles.userAvatar }
+                    sourceUri={ selectedImage }
                     onChangeImage={ handleImageUpload }
                 />
                 <Wrapper y>  

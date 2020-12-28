@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { rem } from '../../utils';
 import { colors } from '../../config/defaultStyles';
 
-function FormSubmit({ title, children, style }) {
+function FormSubmit({ title, children, style, onPress }) {
     const { handleSubmit } = useFormikContext()
     
     return (

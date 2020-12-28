@@ -10,8 +10,6 @@ import LoadingScreen from './LoadingScreen';
 function ChannelDetailScreen({ channelId }) {
     const { data: channelData } = useFirestoreQuery(fs => fs.doc(`channels/${ channelId }`));
     
-    console.log({ channelData })
-    
     return (
         <>
             {

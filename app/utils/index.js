@@ -1,6 +1,7 @@
 import { Dimensions } from 'react-native';
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
+import * as ImagePicker from 'expo-image-picker';
 
 dayjs.extend(calendar)
 
@@ -40,3 +41,15 @@ export const messageRecievedDate = (date) => dayjs(date).calendar(null, {
     lastWeek: 'dd h:mm', // Last week ( Last Monday at 2:30 AM )
     sameElse: 'DD MMM h:mm' // Everything else ( 7/10/2011 )
 })
+
+export const selectImage = async () => {
+    try {
+        const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: .7
+        });
+        if(!cancelled) return uri;
+    } catch (err) {
+        throw new Error('Error reading image')
+    }
+}

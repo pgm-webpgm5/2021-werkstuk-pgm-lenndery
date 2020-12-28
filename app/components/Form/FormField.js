@@ -5,7 +5,7 @@ import { useFormikContext } from 'formik';
 import { AppInput, FormError } from '../';
 
 function FormField({ name, onChange = () => null, containerStyle = {} , ...otherProps }) {
-    const { setFieldTouched, handleChange, errors, touched } = useFormikContext()
+    const { setFieldTouched, handleChange, errors, touched, handleSubmit } = useFormikContext()
     
     return (
         <View style={[ containerStyle ]}>

@@ -55,7 +55,6 @@ function AppContent() {
             activity: state,
         }
         updateDocument(newActivityState)
-        console.log({ state })
     }
     
     console.log({ updateUserActivityState })
