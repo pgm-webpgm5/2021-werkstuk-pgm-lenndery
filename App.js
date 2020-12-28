@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, View, FlatList, LogBox, KeyboardAvoidingView, Platform, StatusBar, AppState } from 'react-native';
+import { Text, StyleSheet, View, FlatList, LogBox, KeyboardAvoidingView, Platform, AppState } from 'react-native';
 import Toast, { BaseToast } from 'react-native-toast-message';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 
 import { colors } from './app/config/defaultStyles';
 import { toastConfig } from './app/config/toastConfig';
@@ -31,21 +32,16 @@ export default function App() {
 }
 
 function AppContent() {    
-    const [ loading, setLoading ] = useState(true);
     const { maxHeight } = useKeyboardHeight();
-    const { user } = useAuth()
+    const { user, noUserFound } = useAuth()
     const { updateDocument, state: updateUserActivityState } = useFirestoreCrud(`users/${ user && user.uid }`)
     
     useEffect(() => {
-        AppState.addEventListener('change', appStateHandler);
-        // AppState.addEventListener('focus', appStateHandler);
-        // AppState.addEventListener('blur', appStateHandler);
+        user && AppState.addEventListener('change', appStateHandler);
         return () => {
             AppState.removeEventListener("change", appStateHandler);
-            // AppState.removeEventListener("focus", appStateHandler);
-            // AppState.removeEventListener("blur", appStateHandler);
         }
-    }, [])
+    }, [user])
     
     const appStateHandler = state => {
         const newActivityState = state == 'active' ? {
@@ -56,27 +52,13 @@ function AppContent() {
         }
         updateDocument(newActivityState)
     }
-    
-    console.log({ updateUserActivityState })
-    
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setLoading(false)
-        }, 3000)
-        return () => timeout
-    }, [])
-    
-    /**
-     * first map
-     * get index, check if message next index is from same user
-     * combine if so and ignore following
-     */
 
     return (
         <View style={[ styles.container, { maxHeight: maxHeight }]}>
+            <StatusBar style="light" />
             <Toast config={ toastConfig } style={{ zIndex: 1000 }} ref={(ref) => Toast.setRef(ref)} />
             
-            { loading ? 
+            { !user ? 
                 <SplashScreen/>:
                 <LoggedInCheck is={
                     <NavigationContainer theme={ DarkTheme }>

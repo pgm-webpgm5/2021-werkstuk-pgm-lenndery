@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Image, StyleSheet, Switch, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { AppButton, H3, H4, Label, Screen, Wrapper, Small, AppText, AppSwitch, ImageInput } from '../components';
 import { circular, colors, textCenter } from '../config/defaultStyles';
@@ -10,6 +11,7 @@ import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem } from '../utils';
 
 function UserSettingsScreen(props) {    
+    const navigation = useNavigation()
     const { logout, user } = useAuth();
     const { getDownloadURL, state: { data: userAvatarUri } } = useFirebaseStorage(user.avatar);
     const [ selectedImage, setSelectedImage ] = useState();
@@ -66,6 +68,11 @@ function UserSettingsScreen(props) {
                 <Wrapper y>  
                     <H4 style={[ textCenter, { marginBottom: rem(.4) } ]}>{ user.username }</H4>
                     <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
+                    <AppButton 
+                        theme="small" 
+                        title="edit profile" 
+                        style={{ alignSelf: 'center', marginTop: rem(1) }} 
+                        onPress={() => navigation.navigate('editProfile')}/>
                 </Wrapper>
                 <Wrapper y>  
                     <Label>Notifications</Label>

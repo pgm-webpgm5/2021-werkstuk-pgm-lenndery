@@ -5,11 +5,11 @@ import { useFormikContext } from 'formik'
 import { rem } from '../../utils';
 import { colors, border } from '../../config/defaultStyles';
 
-function AppInput({ icon, ...otherProps }) {    
+function AppInput({ icon, initialValue = '', ...otherProps }) {    
     return (
         <View style={[styles.wrapper, otherProps.multiline && styles.areaWrapper]}>
             { icon && <MaterialCommunityIcons style={styles.icon} name={icon} size={24} color="black" />}
-            <TextInput style={[styles.input, otherProps.multiline && styles.area]} { ...otherProps } placeholderTextColor={ colors.grey500 }/>
+            <TextInput style={[styles.input, otherProps.multiline && styles.area]} { ...otherProps } defaultValue={initialValue} placeholderTextColor={ colors.grey500 }/>
         </View>
     );
 }

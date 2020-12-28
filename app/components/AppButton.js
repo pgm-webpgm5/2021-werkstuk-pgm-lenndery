@@ -41,6 +41,14 @@ const buttonThemes = StyleSheet.create({
     opaque: {
         backgroundColor: '#A31E2D30',
         color: colors.primary
+    },
+    small: {
+        alignSelf: 'flex-start',
+        borderRadius: 100,
+        paddingVertical: rem(.5),
+        paddingHorizontal: rem(.8),
+        backgroundColor: '#A31E2D30',
+        backgroundColor: '#FFFFFF30'
     }
 })
 
@@ -51,6 +59,11 @@ const labelThemes = StyleSheet.create({
     },
     opaque: {
         color: colors.primaryBright
+    },
+    small: {
+        fontSize: rem(.8),
+        color: colors.primaryBright,
+        color: 'white'
     }
 })
 

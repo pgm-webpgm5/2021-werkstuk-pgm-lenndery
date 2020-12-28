@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     photo: {
         width: 200,
         height: 200,
+        backgroundColor: colors.dark700,
         ...borderRadius(5, messageBorderRadius, messageBorderRadius, messageBorderRadius)
     }
 })

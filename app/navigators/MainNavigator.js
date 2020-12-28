@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View , StyleSheet, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback} from 'react-native';
+import { Text, View , StyleSheet, KeyboardAvoidingView, StatusBar, TouchableOpacity} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Modal from 'react-native-modal';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { ChannelOverviewScreen, ChannelMessagesScreen, ChannelDetailScreen } from '../screens';
@@ -67,9 +67,15 @@ function MainNavigator(props) {
         <>
             <Stack.Navigator /*initialRouteName="Login" */>
                 <Stack.Screen name="channels" component={ChannelOverviewScreen} options={{
+                    headerRightContainerStyle: {
+                        paddingRight: rem(1)
+                    },
                     title: 'Channels',
                     headerShown: true,
-                    headerRight: () => <AppButton theme="simple" title="New channel" labelStyle={{ color: 'white' }} onPress={() => setModal(!modal)}/>,
+                    // headerRight: () => <AppButton theme="simple" title="New channel" labelStyle={{ color: 'white' }} onPress={() => setModal(!modal)}/>,
+                    headerRight: () => <TouchableOpacity onPress={() => setModal(!modal)}>
+                        <MaterialIcons name="group-add" size={ rem(1.7) } color="white" />
+                    </TouchableOpacity>,
                     ...screenHeader,
                 }}/>
                 <Stack.Screen name="channelMessages" component={ChannelMessagesScreen} options={({ route: { params } }) => ({

@@ -12,8 +12,9 @@ export const useAuth = () => {
 
 export function AuthProvider({ children }) {
     const [ user, setUser ] = useState(null);
+    const [ noUserFound, setNoUserFound ] = useState(null);
     const [ loading, setLoading ] = useState(true);
-    const { setDocumentByID, state } = useFirestoreCrud();
+    const { setDocumentByID, state, updateDocument } = useFirestoreCrud();
     
     /**
      * Save a user in the storage
@@ -33,15 +34,11 @@ export function AuthProvider({ children }) {
         .createUserWithEmailAndPassword(email, password)
         .then(resp => {
             const uid = resp.user.uid;
-            
             setDocumentByID({
                 username: username,
                 activity: 'active',
                 last_activity: new Date()
             }, `users/${uid}`)
-            // resp.user.updateProfile({
-            //     displayName: username
-            // })
         })
         
     /**
@@ -50,7 +47,13 @@ export function AuthProvider({ children }) {
     /**
      * TODO: set activity to logged_out
      */
-    const logout = () => auth.signOut()
+    const logout = () => {
+        auth.signOut()
+        updateDocument({
+            activity: 'logged_out',
+            last_activity: new Date()
+        })
+    }
     
     /**
      * TODO: set activity to active + last_activity
@@ -58,20 +61,29 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async registeredUser => {
             if (registeredUser) {
+                setNoUserFound(false)
                 const data = await firestore.doc(`users/${registeredUser.uid}`).get();
                 setUser({ 
                     ...registeredUser,
                     ...(data.data() || {} ),
                 });
+                updateDocument({
+                    activity: 'active',
+                    last_activity: new Date()
+                })
                 setLoading(false)
             }
-            else setUser(null)
+            else {
+                setUser({})
+                setNoUserFound(true)
+            }
         })
         return () => unsubscribe();
     }, [])
     
     const value = {
         user,
+        noUserFound,
         login,
         register,
         logout

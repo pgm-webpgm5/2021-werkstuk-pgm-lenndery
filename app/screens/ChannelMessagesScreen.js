@@ -39,7 +39,7 @@ function ChannelMessagesScreen(props) {
                     refreshing={ refreshing }
                     renderItem={ ({item, index }) => 
                         item.content && <Message 
-                            onPress={() => deleteDocument(item.id)} 
+                            onPress={() => console.log('image bigger')} 
                             data={ item } 
                             isSender={ item.sender == user.uid && true }
                         />

@@ -69,7 +69,7 @@ function ChatForm({ messagePath, containerStyle }) {
                     containerStyle={ styles.formField }
                 />
                 <FormSubmit style={ styles.sendButton }>
-                    <MaterialCommunityIcons name="send" size={ rem(2) } color={ colors.grey300 } />
+                    <MaterialCommunityIcons name="send" size={ rem(1.7) } color={ colors.grey300 } />
                 </FormSubmit>
             </Form>
         </View>

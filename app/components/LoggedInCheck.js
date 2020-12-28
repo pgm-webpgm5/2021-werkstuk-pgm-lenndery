@@ -4,11 +4,11 @@ import { AuthContext } from '../contexts';
 import { useAuth } from '../firebase/auth';
 
 function LoggedInCheck({ is, isNot }) {
-    const { user } = useAuth()
+    const { user, noUserFound } = useAuth()
     // const user = true;
     
-    if (user) return is;
-    if (!user) return isNot;
+    if (!noUserFound) return is;
+    if (noUserFound) return isNot;
 }
 
 export default LoggedInCheck;

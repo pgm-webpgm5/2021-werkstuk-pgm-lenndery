@@ -55,7 +55,7 @@ function LoginScreen(props) {
                             name="password"
                             autoCapitalize="none"
                             autoCorrect={false}
-                            keyboardType="email-address"
+                            keyboardType="default"
                             placeholder="Password"
                             textContextType="password"
                             secureTextEntry

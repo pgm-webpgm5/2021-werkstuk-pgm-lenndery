@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { LogoIcon } from '../assets';
 import { circular, colors } from '../config/defaultStyles';
-import { MainNavigator } from '.';
+import { MainNavigator, SettingsNavigator  } from '.';
 import { rem } from '../utils';
 import { UserSettingsScreen } from '../screens';
 import { useFirebaseStorage } from '../firebase/useFirebaseStorage';
 import { useAuth } from '../firebase/auth';
-import { useEffect } from 'react/cjs/react.development';
 import UsersNavigator from './UsersNavigator';
 
 const Tab = createBottomTabNavigator();
@@ -53,7 +52,7 @@ function MainTabNavigator(props) {
             />
             <Tab.Screen
                 name="accountSettings"
-                component={UserSettingsScreen}
+                component={SettingsNavigator}
                 options={{
                     // tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={rem(1.6)} color={ color } />,
                     tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={rem(1.6)} color={ color } />

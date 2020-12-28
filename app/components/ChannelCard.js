@@ -27,6 +27,7 @@ function ChannelCard({ onPress, data }) {
     
     const lastMessage = lastMessageData && lastMessageData.length != 0
     const lastMessageText = lastMessage && lastMessageData[0].content || 'lel';
+    const lastMessageType = lastMessage && lastMessageData[0].type || 'generic';
     const lastMessageAuthor = lastMessage && lastMessageData[0].sender_name || '';
     const lastAuthor = lastMessage && lastMessageData[0].sender === user.uid;
     
@@ -40,7 +41,12 @@ function ChannelCard({ onPress, data }) {
                 <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent="3" uri={ avatar } />
                 <View style={ styles.channelInfo }>
                     <H5 style={ styles.channelName }># { data.channel_name }</H5>
-                    { lastMessage && <AppText style={ styles.channelLastMessagePreview }><Strong>{lastAuthor && 'You: '}</Strong> {(lastMessageText).substring(0, 30)}...</AppText> }
+                    { lastMessage && <AppText style={ styles.channelLastMessagePreview }>
+                        <Strong>{lastAuthor && 'You: '}</Strong> { lastMessageType !== 'photo' ? 
+                        `${(lastMessageText).substring(0, 30)}...` :
+                        (lastAuthor ? 'Image send' : 'Photo recieved')
+                    }
+                    </AppText> }
                 </View>
             </View>
         </TouchableOpacity>
