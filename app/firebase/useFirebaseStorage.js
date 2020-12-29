@@ -7,8 +7,7 @@ import { storage } from './firebase';
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case "idle":
-            return { status: "idle", data: undefined, error: undefined };
+        
         case "loading":
         return { status: "loading", data: undefined, error: undefined };
         case "success":

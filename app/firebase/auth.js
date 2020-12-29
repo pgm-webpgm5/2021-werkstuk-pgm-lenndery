@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { AppState } from "react-native";
 import { auth, firestore } from "./firebase";
 import { useFirestoreCrud } from "./useFirestoreCrud.js";
 import { useFirestoreQuery } from "./useFirestoreQuery.js";

@@ -25,7 +25,7 @@ function MainTabNavigator(props) {
     }, [])
     
     return (
-        <Tab.Navigator tabBarOptions={{
+        <Tab.Navigator initialRouteName="inbox" tabBarOptions={{
             activeBackgroundColor: colors.dark800,
             activeTintColor: 'white',
             style: {
@@ -54,7 +54,6 @@ function MainTabNavigator(props) {
                 name="accountSettings"
                 component={SettingsNavigator}
                 options={{
-                    // tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={rem(1.6)} color={ color } />,
                     tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={rem(1.6)} color={ color } />
                 }}
             />

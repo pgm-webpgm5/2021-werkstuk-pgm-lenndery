@@ -14,7 +14,6 @@ function ChannelCard({ onPress, data }) {
     const { data: lastMessageData } = useFirestoreQuery(fs => fs.collection(`channels/${data.id}/messages`)
         .orderBy("timestamp", "desc").limit(1)
     )
-    const { fetchQuery, data: lastAuthorData, status } = useLazyFirestoreQuery()
     
     const setAvatarUri = async (channelId) => {
         try {

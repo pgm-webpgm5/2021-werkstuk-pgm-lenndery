@@ -1,14 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import { Text} from 'react-native';
+import React, { useEffect } from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 
-import { useAuth } from '../firebase/auth';
-
-function LoggedInCheck({ is, isNot }) {
-    const { user, noUserFound } = useAuth()
+export default useNotifications = (notificationListener) => {
     useEffect(() => {
-        registerForPushNotifications().then((resp) => console.log({ resp }))
+        registerForPushNotifications().then((resp) => console.log({ resp }));
+        notificationListener && Notifications.addNotificationResponseReceivedListener(notificationListener);
+        
+        return () => Notifications.removeNotificationSubscription(notificationListener);
     }, [])
     
     const registerForPushNotifications = async () => {
@@ -20,12 +19,6 @@ function LoggedInCheck({ is, isNot }) {
             console.log({ token })
         } catch (err) {
             console.log({ err });
-        }
-        
+        }  
     }
-    
-    if (!noUserFound) return is;
-    if (noUserFound) return isNot;
 }
-
-export default LoggedInCheck;

@@ -72,7 +72,8 @@ function UserSettingsScreen(props) {
                         theme="small" 
                         title="edit profile" 
                         style={{ alignSelf: 'center', marginTop: rem(1) }} 
-                        onPress={() => navigation.navigate('editProfile')}/>
+                        onPress={() => navigation.navigate('editProfile')}
+                    />
                 </Wrapper>
                 <Wrapper y>  
                     <Label>Notifications</Label>

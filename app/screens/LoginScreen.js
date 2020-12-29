@@ -62,7 +62,7 @@ function LoginScreen(props) {
                         />
                         <FormSubmit title="Next" />
                     </Form>
-                    <AppButton theme="simple" style={{ marginTop: rem(1), alignSelf: 'center' }} title="I'm new here" onPress={() => navigation.navigate('register') }/>
+                    {/* <AppButton theme="simple" style={{ marginTop: rem(1), alignSelf: 'center' }} title="I'm new here" onPress={() => navigation.navigate('register') }/> */}
                 </Wrapper>
             </Screen>
         </>

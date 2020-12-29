@@ -29,10 +29,14 @@ function ChannelMessagesScreen(props) {
     }, [])
         
     return (
-        <Screen ignore style={{ maxHeight: '100%' }}>
-            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0, maxHeight: '100%' }}>
+        <Screen ignore>
+            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0 }}>
                 <FlatList 
-                    style={{ height: '100%', padding: rem(1), paddingTop: rem(.5) }}
+                    style={{ 
+                        height: '100%', 
+                        padding: rem(1), 
+                        paddingTop: rem(.5) ,
+                    }}
                     data={ messagesData }
                     keyExtractor={ m => m.id }
                     inverted

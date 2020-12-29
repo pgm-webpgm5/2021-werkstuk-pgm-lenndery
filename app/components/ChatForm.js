@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, Keyboard } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Yup from 'yup';
 
@@ -18,7 +18,8 @@ function ChatForm({ messagePath, containerStyle }) {
     const [ uploadedImagePath, setUploadedImagePath ] = useState()
     const { uploadFile, state: { status, data: imageUploadData } } = useFirebaseStorage('attachments')
     
-    const handleMessageSend = (data, { resetForm }) => { 
+    const handleMessageSend = (data, { resetForm }) => {
+        resetForm({});
         addDocument({
             content: data.message,
             sender: user.uid,
@@ -57,9 +58,9 @@ function ChatForm({ messagePath, containerStyle }) {
                 <MaterialCommunityIcons name="image-multiple" size={ rem(1.6) } color={ colors.grey300 } />
             </TouchableOpacity>
             <Form
-                onSubmit={handleMessageSend}
+                onSubmit={ handleMessageSend }
                 style={[ styles.form, containerStyle ]}
-                validationSchema={validationSchema}
+                validationSchema={ validationSchema }
             >
                 <FormField
                     name="message"
@@ -67,6 +68,7 @@ function ChatForm({ messagePath, containerStyle }) {
                     keyboardType="default"
                     placeholder="Say something ..."
                     containerStyle={ styles.formField }
+                    resetOnSend
                 />
                 <FormSubmit style={ styles.sendButton }>
                     <MaterialCommunityIcons name="send" size={ rem(1.7) } color={ colors.grey300 } />

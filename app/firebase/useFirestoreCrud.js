@@ -78,10 +78,10 @@ export const useFirestoreCrud = (documentPath = '') => {
         try {
             const updatedDocument = await firestore.doc(path).update(data);
             dispatch({ type: "success", payload: null })
-            dispatch({ type: "idle" }); 
         } catch (err) {
             dispatch({ type: "error", payload: err })
         }
+        dispatch({ type: "idle" });
     }
     
     /**

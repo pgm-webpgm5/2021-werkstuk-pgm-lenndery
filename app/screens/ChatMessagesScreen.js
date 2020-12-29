@@ -1,9 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Text, Modal, Image } from 'react-native';
 
-import { ChatForm, Message, Screen, Wrapper } from '../components';
+import { AppButton, ChatForm, Message, Screen, Wrapper } from '../components';
 import { useAuth } from '../firebase/auth';
+import { useFirebaseStorage } from '../firebase/useFirebaseStorage';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { useFirestoreQuery, useLazyFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem, vh } from '../utils';
@@ -49,17 +50,13 @@ function ChatMessagesScreen(props) {
         }
     }, [addNewChatStatus])
     
-    useEffect(() => {
-        data && console.log('CHATS DATA', { data }) 
-    }, [data])
-    
     if (!data) {
         return <LoadingScreen />
     } else return (
-        <Screen ignore style={{ maxHeight: '100%' }}>
-            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0, maxHeight: '100%' }}> 
+        <Screen ignore>
+            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0 }}> 
                 <FlatList 
-                    style={{ height: '100%', padding: rem(1), paddingTop: rem(.5) }}
+                    style={{ padding: rem(1), paddingTop: rem(.5), height: '100%' }}
                     contentContainerStyle={{ paddingBottom: rem(1) }}
                     data={ messagesData }
                     keyExtractor={ m => m.id }

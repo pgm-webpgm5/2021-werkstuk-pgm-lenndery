@@ -23,19 +23,6 @@ function MainNavigator(props) {
     const { getAvatarUri, uploadAvatar } = useAvatar();
     const [ avatarFilePath, setAvatarFilePath ] = useState();
     const { state: { status: addedChannelStatus, data: addedChannelData }, addDocument: addChannel } = useFirestoreCrud(`channels`);
-    const navigation = useNavigation();
-    
-    const avatarUpload = async (channelId, filePath) => {
-        const fileResponse = await fetch(filePath);
-        const fileBlob = await fileResponse.blob();
-        
-        const metadata = {
-            contentType: 'image/jpeg'
-        };
-        const rootStorageRef = storage.ref();
-        const imageRef = await rootStorageRef.child(`channel-avatars/${channelId}.jpg`);
-        const upload = await imageRef.put(fileBlob, metadata);
-    }
     
     const handleChannelCreation = ({ channelName, avatar }) => { 
         setAvatarFilePath(avatar)
@@ -72,7 +59,6 @@ function MainNavigator(props) {
                     },
                     title: 'Channels',
                     headerShown: true,
-                    // headerRight: () => <AppButton theme="simple" title="New channel" labelStyle={{ color: 'white' }} onPress={() => setModal(!modal)}/>,
                     headerRight: () => <TouchableOpacity onPress={() => setModal(!modal)}>
                         <MaterialIcons name="group-add" size={ rem(1.7) } color="white" />
                     </TouchableOpacity>,
@@ -118,7 +104,6 @@ function MainNavigator(props) {
                             />
                             <FormSubmit title="Create channel"/>
                         </Form>
-                        {/* <AppButton onPress={() => setModal(!modal)} title="Create channel"/> */}
                         <AppButton theme="simple" labelStyle={{ color: 'white' }} onPress={() => setModal(false)} title="Discard"/>
                     </Wrapper>
                 </View>
@@ -140,7 +125,6 @@ const styles = StyleSheet.create({
     modalNewChannel: {
         margin: 0,
         height: '100%',
-        // maxHeight: 300
        backgroundColor: '#00000030'
     }
 })

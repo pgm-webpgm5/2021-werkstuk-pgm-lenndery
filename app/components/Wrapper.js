@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Keyboard } from 'react-native';
 import { rem } from '../utils';
 
 function Wrapper({ children, style, x, y }) {
@@ -17,7 +17,8 @@ function Wrapper({ children, style, x, y }) {
 
 const styles = StyleSheet.create({
     wrapper: {
-        padding: rem(2)
+        padding: rem(2),
+        height: '100%',
     },
     x: {
         padding: 0,
