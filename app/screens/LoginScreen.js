@@ -6,9 +6,7 @@ import * as Yup from 'yup';
 import { Label, Screen, H4, Form, FormField, Wrapper, H3, H5, FormSubmit, AppButton, FormError } from '../components';
 import { LogoIcon } from '../assets'
 import { rem, vh, vw } from '../utils';
-import { AuthContext } from '../contexts';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../firebase/firebase';
 import { useAuth } from '../firebase/auth';
 
 const validationSchema = Yup.object().shape({
@@ -20,13 +18,8 @@ function LoginScreen(props) {
     const navigation = useNavigation()
     const { login } = useAuth()
     
-    // const handleLogin = async data => {
-    //     storeUser(data)
-    //     setUser(data)
-    //     return {status: 'done'}
-    // }
-    
     const handleLogin = ({email, password}) => {
+        console.log('LOGIN')
         login(email, password);
     }
      

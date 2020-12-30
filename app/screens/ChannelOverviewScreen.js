@@ -3,6 +3,7 @@ import { FlatList, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import * as Linking from 'expo-linking'
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { Screen, ChannelCard, AppInput, Form, FormField, FormSubmit, AppText, Label } from '../components';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
@@ -11,21 +12,28 @@ import { rem } from '../utils';
 function ChannelOverviewScreen(props) {
     const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState(false)
+    const [ searched, setSearched ] = useState(false);
     const { data, refetch } = useFirestoreQuery(fs => fs.collection('channels'))
     
     const handleSearch = ({ query }) => {
-        if (query) refetch(fs => fs.collection('channels').where("channel_name", "==", query))
-        else refetch()
+        if (query && searched) {
+            setSearched(false)
+            refetch()
+        } else if (query) {
+            setSearched(true)
+            refetch(fs => fs.collection('channels').where("channel_name", "==", query))
+        }
     }
         
     return (
         <Screen ignore>
-            <Form style={{ marginHorizontal: rem(1), marginTop: rem(1) }} onSubmit={ handleSearch }>
+            <Form style={{ marginLeft: rem(1), marginTop: rem(1), flexDirection: 'row' }} onSubmit={ handleSearch }>
                 <FormField
                     name="query"
                     placeholder="Search channels"
-                    onChange={value => handleSearch({ query: value })}
+                    containerStyle={{ flex: 1 }}
                 />
+                <FormSubmit style={{ backgroundColor: null }}><MaterialIcons name={searched ? 'search-off' : 'search' } size={ rem(1.6) } color="white" /></FormSubmit>
             </Form>
             <FlatList
                 data={ data }

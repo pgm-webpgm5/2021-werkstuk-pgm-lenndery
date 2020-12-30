@@ -20,8 +20,13 @@ export function AuthProvider({ children }) {
      * @param {string} email 
      * @param {string} password 
      */
-    const login = (email, password) => auth
-        .signInWithEmailAndPassword(email, password);
+    const login = (email, password) => {
+        try {
+            auth.signInWithEmailAndPassword(email, password);
+        } catch (err) {
+            console.log('LOGIN ERROR', err)
+        }
+    }
     
     /**
      * Create a new user

@@ -4,17 +4,15 @@ import { useFormikContext } from 'formik';
 
 import { AppInput, FormError } from '../';
 
-function FormField({ name, onChange = () => null, containerStyle = {}, resetOnSend, ...otherProps }) {
+function FormField({ name, onChange = () => null, containerStyle = {}, style = {}, resetOnSend, ...otherProps }) {
     const { setFieldTouched, handleChange, errors, touched, initialValues, values } = useFormikContext()
     
     return (
         <View style={[ containerStyle ]}>
             <AppInput
+                style={ style }
                 onBlur={ () => setFieldTouched(name) }
-                onChangeText={(value) => { 
-                    onChange(value)
-                    return handleChange(name) 
-                }}
+                onChangeText={ handleChange(name) }
                 initialValue={ initialValues[name] }
                 value={ resetOnSend && (values[name] || '') }
                 { ...otherProps }
