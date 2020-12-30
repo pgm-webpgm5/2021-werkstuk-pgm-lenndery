@@ -13,11 +13,12 @@ function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => nu
         if (!granted) alert('Need to enablle permission for camera roll')
     }
     
-    useEffect(() => {
-        requestPermission();
-    }, [])
+    // useEffect(() => {
+    //      requestPermission();
+    // }, [])
     
     const handlePress = () => {
+        requestPermission();
         if(!sourceUri) selectImage()
         if(sourceUri) Alert.alert(
             'Avatar', 

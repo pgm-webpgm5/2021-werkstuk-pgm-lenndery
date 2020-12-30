@@ -40,7 +40,7 @@ function Message({ data: { content, sender, sender_name, timestamp, type }, onPr
     const TextMessage = ({ isSender, content }) => (
         <AppText style={[ styles.message, isSender && stylesIsSender.message ]}>{ content }</AppText>
     )
-    
+        
     return (
         <View style={[ styles.container, style ]}>
             <TouchableOpacity onPress={onPress} onLongPress={() => type === 'generic' && copyToClipboard(content)} activeOpacity={.6}>

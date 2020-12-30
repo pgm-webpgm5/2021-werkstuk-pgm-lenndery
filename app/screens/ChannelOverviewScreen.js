@@ -1,17 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
+import * as Linking from 'expo-linking'
 
-import { Screen, ChannelCard } from '../components';
+import { Screen, ChannelCard, AppInput, Form, FormField, FormSubmit, AppText, Label } from '../components';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
+import { rem } from '../utils';
 
 function ChannelOverviewScreen(props) {
     const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState(false)
     const { data, refetch } = useFirestoreQuery(fs => fs.collection('channels'))
+    
+    const handleSearch = ({ query }) => {
+        if (query) refetch(fs => fs.collection('channels').where("channel_name", "==", query))
+        else refetch()
+    }
         
     return (
         <Screen ignore>
+            <Form style={{ marginHorizontal: rem(1), marginTop: rem(1) }} onSubmit={ handleSearch }>
+                <FormField
+                    name="query"
+                    placeholder="Search channels"
+                    onChange={value => handleSearch({ query: value })}
+                />
+            </Form>
             <FlatList
                 data={ data }
                 keyExtractor={ c => c.id }
@@ -22,6 +37,21 @@ function ChannelOverviewScreen(props) {
                         id: item.id,
                         channel_name: item.channel_name
                     })}/>
+                }
+                ListEmptyComponent={(e) =>
+                    <TouchableOpacity onPress={() => Linking.openURL('https://www.youtube.com/watch?v=mTo8GiPQdPs')} activeOpacity={.6}>
+                        <LottieView
+                            style={{
+                                width: 400,
+                                height: 400,
+                                backgroundColor: null,
+                                alignSelf: 'center'
+                            }}
+                            autoPlay={ true }
+                            source={require('../assets/werner.json')}
+                        />
+                        <Label style={{ textAlign: 'center', marginTop: -100, fontWeight: 'bold' }}>Werner couldn't find any{"\n"}channels with that name</Label>
+                    </TouchableOpacity>
                 }
             />
         </Screen>

@@ -11,6 +11,7 @@ import { rem } from '../utils';
 function ChannelCard({ onPress, data }) {
     const [ avatar, setAvatar ] = useState()
     const { user } = useAuth();
+    
     const { data: lastMessageData } = useFirestoreQuery(fs => fs.collection(`channels/${data.id}/messages`)
         .orderBy("timestamp", "desc").limit(1)
     )

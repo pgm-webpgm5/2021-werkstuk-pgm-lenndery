@@ -16,7 +16,7 @@ function ChatForm({ messagePath, containerStyle }) {
     const { user } = useAuth();
     const { addDocument } = useFirestoreCrud(messagePath);
     const [ uploadedImagePath, setUploadedImagePath ] = useState()
-    const { uploadFile, state: { status, data: imageUploadData } } = useFirebaseStorage('attachments')
+    const { uploadFile, state: { status, data: imageUploadData, error } } = useFirebaseStorage('attachments')
     
     const handleMessageSend = (data, { resetForm }) => {
         resetForm({});
@@ -43,7 +43,7 @@ function ChatForm({ messagePath, containerStyle }) {
     }, [imageUploadData])
     
     useEffect(() => {
-        addDocument({
+        uploadedImagePath && addDocument({
             content: uploadedImagePath,
             sender: user.uid,
             sender_name: user.username,

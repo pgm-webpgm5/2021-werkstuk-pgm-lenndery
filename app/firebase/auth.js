@@ -43,25 +43,20 @@ export function AuthProvider({ children }) {
     /**
      * Remove the saved user from the storage
      */
-    /**
-     * TODO: set activity to logged_out
-     */
+
     const logout = () => {
-        auth.signOut()
+        auth.signOut();
         updateDocument({
             activity: 'logged_out',
             last_activity: new Date()
-        })
+        });
     }
     
-    /**
-     * TODO: set activity to active + last_activity
-     */
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async registeredUser => {
             if (registeredUser) {
                 setNoUserFound(false)
-                const data = await firestore.doc(`users/${registeredUser.uid}`).onSnapshot(snapshot => {
+                firestore.doc(`users/${registeredUser.uid}`).onSnapshot(snapshot => {
                     setUser({ 
                         ...registeredUser,
                         ...(snapshot.data() || {} ),

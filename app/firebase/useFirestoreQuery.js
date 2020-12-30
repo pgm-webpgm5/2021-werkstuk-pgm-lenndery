@@ -18,16 +18,16 @@ const reducer = (state, action) => {
  * 
  * @param {object} query fs => fs.doc(documentpath)[.collection('subcollection')]
  */
-export const useFirestoreQuery = (query) => {   
+export const useFirestoreQuery = (defaultQuery) => {   
     const initialState = { 
-        status: query ? "loading" : "idle", 
+        status: "idle", 
         data: undefined, 
         error: undefined 
     }
     
     const [ state, dispatch ] = useReducer(reducer, initialState);
     
-    const fetchQuery = () => {
+    const fetchQuery = (query = defaultQuery) => {
         dispatch({ type: "loading" });
         
         // Subscribe to query with onSnapshot
@@ -53,7 +53,7 @@ export const useFirestoreQuery = (query) => {
         fetchQuery();
     }, [])
     
-    const refetch = () => {
+    const refetch = (query = defaultQuery) => {
         fetchQuery(query)
     }
     
