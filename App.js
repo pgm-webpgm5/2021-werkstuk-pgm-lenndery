@@ -27,16 +27,16 @@ LogBox.ignoreAllLogs(['Setting a timer']);
 };
 
 Notifications.setNotificationHandler({
-    handleNotification: async () => ({
+    handleNotification: {
         shouldPlaySound: true,
         shouldShowAlert: true,
         shouldSetBadge: true
-    })
+    }
 })
 
 export default function App() {
     return (
-        <AuthProvider>
+        <AuthProvider style={{ flex: 1 }}>
             <AppContent/>
         </AuthProvider>
     )
@@ -68,7 +68,7 @@ function AppContent() {
     }
     
     return (
-        <View style={[styles.container ]}>
+        <View style={[styles.container, { flex: 1, maxHeight: '100%' } ]}>
             <StatusBar style="light" />
             <Toast config={ toastConfig } style={{ zIndex: 1000 }} ref={(ref) => Toast.setRef(ref)} />
             

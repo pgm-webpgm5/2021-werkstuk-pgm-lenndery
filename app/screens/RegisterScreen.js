@@ -16,7 +16,7 @@ function RegisterScreen(props) {
     
     return (
         <Screen>
-            <Wrapper style={ styles.wrapper }> 
+            <Wrapper style={[ styles.wrapper, { padding: 0 }]}> 
                 {/* <LogoLight style={[ logo, styles.logo, { width: vw(40)} ]}/> */}
                 <LogoIcon style={[ styles.logo ]}/>
                 <H3 style={{ fontWeight: 'bold' }}>Hi there</H3>

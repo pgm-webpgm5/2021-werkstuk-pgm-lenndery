@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { firestore } from '../firebase/firebase'
 import { Screen, ChannelCard } from '../components';
-import channelData from '../assets/fake_data/channels.json';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 
 function ChannelOverviewScreen(props) {

@@ -30,33 +30,27 @@ function ChannelMessagesScreen(props) {
         
     return (
         <Screen ignore>
-            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0 }}>
-                <FlatList 
-                    style={{ 
-                        height: '100%', 
-                        padding: rem(1), 
-                        paddingTop: rem(.5) ,
-                    }}
-                    data={ messagesData }
-                    keyExtractor={ m => m.id }
-                    inverted
-                    refreshing={ refreshing }
-                    renderItem={ ({item, index }) => 
-                        item.content && <Message 
-                            onPress={() => console.log('image bigger')} 
-                            data={ item } 
-                            isSender={ item.sender == user.uid && true }
-                        />
-                    }
-                />
-                <ChatForm 
-                    messagePath={`channels/${params.id}/messages`}
-                    containerStyle={{
-                        paddingTop: rem(1), 
-                        paddingHorizontal: rem(1),
-                    }}
-                />
-            </Wrapper>
+            <FlatList 
+                contentContainerStyle={{ padding: rem(1)  }}
+                data={ messagesData }
+                keyExtractor={ m => m.id }
+                inverted
+                refreshing={ refreshing }
+                renderItem={ ({item, index }) => 
+                    item.content && <Message 
+                        onPress={() => console.log('image bigger')} 
+                        data={ item } 
+                        isSender={ item.sender == user.uid && true }
+                    />
+                }
+            />
+            <ChatForm 
+                messagePath={`channels/${params.id}/messages`}
+                containerStyle={{
+                    paddingTop: rem(1), 
+                    paddingHorizontal: rem(1),
+                }}
+            />
         </Screen>
     );
 }

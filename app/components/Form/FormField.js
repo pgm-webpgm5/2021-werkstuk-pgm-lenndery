@@ -7,8 +7,6 @@ import { AppInput, FormError } from '../';
 function FormField({ name, onChange = () => null, containerStyle = {}, resetOnSend, ...otherProps }) {
     const { setFieldTouched, handleChange, errors, touched, handleSubmit, initialValues, initialStatus, values } = useFormikContext()
     
-    console.log(values)
-    
     return (
         <View style={[ containerStyle ]}>
             <AppInput

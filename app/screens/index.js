@@ -10,6 +10,7 @@ import LoadingScreen from './LoadingScreen'
 import UsersOverviewScreen from './UsersOverviewScreen'
 import ChatMessagesScreen from './ChatMessagesScreen'
 import UserEditScreen from './UserEditScreen'
+import ChannelEditScreen from './ChannelEditScreen'
 
 export {
     SplashScreen,
@@ -23,5 +24,6 @@ export {
     LoadingScreen,
     UsersOverviewScreen,
     ChatMessagesScreen,
-    UserEditScreen
+    UserEditScreen,
+    ChannelEditScreen
 }

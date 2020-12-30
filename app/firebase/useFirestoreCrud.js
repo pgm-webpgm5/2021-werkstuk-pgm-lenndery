@@ -16,6 +16,10 @@ const reducer = (state, action) => {
     }
 }
 
+/**
+ * 
+ * @param {string} documentPath The path that will be used to execute the requested action
+ */
 export const useFirestoreCrud = (documentPath = '') => {
     const initialState = { 
         status: "idle",
@@ -25,18 +29,16 @@ export const useFirestoreCrud = (documentPath = '') => {
     
     const [ state, dispatch ] = useReducer(reducer, initialState);
     
-    // useEffect(() => {
-    //     dispatch({ type: "idle" });
-    // }, [])
-    
     /**
      * Remove a document in a (sub)collection
-     * @param {string} id Id of the document you want to remove
+     * @param {string} id Id of the document you want to remove, if set to true (must be boolean) the function will inherit the path that was given when initializing the hook
      */
-    const deleteDocument = id => {
+    const deleteDocument = (id) => {
+        const path = id === true ? documentPath : `${documentPath}/${id}`;
+
         dispatch({ type: "loading" });
         
-        firestore.doc(`${documentPath}/${id}`)
+        firestore.doc(path)
         .delete()
         .then(() => dispatch({ type: "success", payload: null }))
         .catch(err => dispatch({ type: "error", payload: null }))

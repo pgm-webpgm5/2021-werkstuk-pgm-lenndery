@@ -9,6 +9,7 @@ import { useFirebaseStorage } from '../firebase/useFirebaseStorage';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem } from '../utils';
+import LoadingScreen from './LoadingScreen';
 
 function UserSettingsScreen(props) {    
     const navigation = useNavigation()
@@ -17,19 +18,10 @@ function UserSettingsScreen(props) {
     const [ selectedImage, setSelectedImage ] = useState();
     const { uploadFile, state: uploadState } = useFirebaseStorage('user-avatars');
     const { updateDocument, state: updateUserState } = useFirestoreCrud(`users/${user.uid}`);
-    const { updateDocument: updateUserActivity, state: updateUserActivityState } = useFirestoreCrud(`users/${ user && user.uid }`)
     
     const handleLogout = () => {
         logout()
-        updateUserActivity({
-            activity: 'logged_out',
-            last_activity: new Date()
-        })
     }
-    
-    console.log({
-        updateUserActivityState
-    })
         
     const handleImageUpload = uri => {
         if (uri) {
@@ -58,31 +50,31 @@ function UserSettingsScreen(props) {
     }, [userAvatarUri])
         
     return (
-        <Screen>
-            <Wrapper>                
+        <Screen style={{ height: '100%' }}>   
+            <Wrapper t>
                 <ImageInput
                     style={ styles.userAvatar }
                     sourceUri={ selectedImage }
                     onChangeImage={ handleImageUpload }
                 />
-                <Wrapper y>  
-                    <H4 style={[ textCenter, { marginBottom: rem(.4) } ]}>{ user.username }</H4>
-                    <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
-                    <AppButton 
-                        theme="small" 
-                        title="edit profile" 
-                        style={{ alignSelf: 'center', marginTop: rem(1) }} 
-                        onPress={() => navigation.navigate('editProfile')}
-                    />
-                </Wrapper>
-                <Wrapper y>  
-                    <Label>Notifications</Label>
-                        <AppSwitch label="Private messages" />
-                        <AppSwitch label="Messages from favorite channels" />
-                </Wrapper>
-                
-                <AppButton theme="opaque" title="Logout" onPress={handleLogout} />
+            </Wrapper>           
+            <Wrapper y style={{ height: null }}>  
+                <H4 style={[ textCenter, { marginBottom: rem(.4) } ]}>{ user.username }</H4>
+                <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
+                <AppButton 
+                    theme="small" 
+                    title="edit profile" 
+                    style={{ alignSelf: 'center', marginTop: rem(1) }} 
+                    onPress={() => navigation.navigate('editProfile')}
+                />
             </Wrapper>
+            <Wrapper y style={{ height: null }}>  
+                <Label>Notifications</Label>
+                    <AppSwitch label="Private messages" />
+                    <AppSwitch label="Messages from favorite channels" />
+            </Wrapper>
+            
+            <AppButton theme="opaque" title="Logout" onPress={handleLogout} />
         </Screen>
     );
 }

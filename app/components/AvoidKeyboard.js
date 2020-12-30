@@ -1,13 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useKeyboardHeight } from '../hooks';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 
 function AvoidKeyboard({ children }) {
-   
     return (
-        <View style={{  }}>
+        <KeyboardAvoidingView
+            behavior="position"
+            keyboardVerticalOffset={ Platform.OS === 'ios' ? 0 : 0 }
+        >
             { children }
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 

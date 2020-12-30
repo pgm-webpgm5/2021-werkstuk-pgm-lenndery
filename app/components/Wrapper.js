@@ -2,13 +2,15 @@ import React from 'react';
 import { View, StyleSheet, Keyboard } from 'react-native';
 import { rem } from '../utils';
 
-function Wrapper({ children, style, x, y }) {
+function Wrapper({ children, style, x, y, b, t }) {
     return (
         <View style={[ 
             styles.wrapper, 
             style,
             x && styles.x,
             y && styles.y,
+            b && styles.b,
+            t && styles.t,
         ]}>
             { children }
         </View>
@@ -18,7 +20,7 @@ function Wrapper({ children, style, x, y }) {
 const styles = StyleSheet.create({
     wrapper: {
         padding: rem(2),
-        height: '100%',
+        // height: '100%',
     },
     x: {
         padding: 0,
@@ -27,6 +29,14 @@ const styles = StyleSheet.create({
     y: {
         padding: 0,
         paddingVertical: rem(2)
+    },
+    t: {
+        padding: 0,
+        paddingTop: rem(2)
+    },
+    b: {
+        padding: 0,
+        paddingBottom: rem(2)
     }
 })
 

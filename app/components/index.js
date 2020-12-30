@@ -10,6 +10,7 @@ import AvoidKeyboard from './AvoidKeyboard';
 import UserAvatarBadge from './UserAvatarBadge';
 import UserChatCard from './UserChatCard';
 import ChatForm from './ChatForm';
+import ChannelEditButton from './ChannelEditButton';
 
 import H1 from './Headings/H1';
 import H2 from './Headings/H2';
@@ -57,5 +58,6 @@ export {
     FormImageInput,
     UserAvatarBadge,
     UserChatCard,
-    ChatForm
+    ChatForm,
+    ChannelEditButton
 }

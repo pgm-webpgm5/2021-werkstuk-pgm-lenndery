@@ -61,10 +61,11 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(async registeredUser => {
             if (registeredUser) {
                 setNoUserFound(false)
-                const data = await firestore.doc(`users/${registeredUser.uid}`).get();
-                setUser({ 
-                    ...registeredUser,
-                    ...(data.data() || {} ),
+                const data = await firestore.doc(`users/${registeredUser.uid}`).onSnapshot(snapshot => {
+                    setUser({ 
+                        ...registeredUser,
+                        ...(snapshot.data() || {} ),
+                    });
                 });
                 updateDocument({
                     activity: 'active',

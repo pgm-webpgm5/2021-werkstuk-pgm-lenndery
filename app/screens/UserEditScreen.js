@@ -1,32 +1,54 @@
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import * as Yup from 'yup';
 
-import { Screen, Wrapper, Form, FormField, H3, FormSubmit, AppButton } from '../components';
+import { Screen, Wrapper, Form, FormField, H3, FormSubmit, AppButton, AvoidKeyboard } from '../components';
 import { useAuth } from '../firebase/auth';
 import { rem } from '../utils';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { auth } from '../firebase/firebase';
 
+const validationSchema = Yup.object().shape({
+    username: Yup.string().min(4).required().label('Username'),
+    email: Yup.string().required().email().label('Email'),
+    password: Yup.string().min(4).label('Password'),
+    firstname: Yup.string().label('Firstname'),
+    lastname: Yup.string().label('Lastname'),
+    address: Yup.string().label('Address'),
+    zip: Yup.number().label('Zip'),
+});
+
 function UserEditScreen(props) {
     const navigation = useNavigation()
     const { user } = useAuth()
-    const { updateDocument: updateUserdata, state: { status: userdataUpdateStatus } } = useFirestoreCrud(`users/${user.uid}`)
+    const { updateDocument: updateUserdata, state: { status: userdataUpdateStatus, error } } = useFirestoreCrud(`users/${user.uid}`);
+    
+    const removeUndefinedValues = data => {
+        const keys = Object.keys(data);
+        keys.map(key => {
+            data[key] === undefined && delete data[key]
+        })
+        
+        return data;
+    }
     
     const handleSubmit = async data => {     
-        navigation.goBack();  
+        // navigation.goBack();         
+        const checkedData = removeUndefinedValues(data);
         
         try {
             // update sensitive data if edited
-            data.password && await updatePassword(data.password)
-            data.email && await updateEmail(data.email)
+            checkedData.password && await updatePassword(data.password)
+            checkedData.email && await updateEmail(data.email)
             
             // remove sensitive data
-            delete data.email
-            delete data.password
+            delete checkedData.email
+            delete checkedData.password
             
-            await updateUserdata(data)
+            console.log( checkedData )
+            
+            await updateUserdata(checkedData)
             Toast.show({
                 text1: 'We\'ve updated you\'re profile',
                 position: 'bottom'
@@ -38,7 +60,7 @@ function UserEditScreen(props) {
             });
         }
     }
-    
+        
     const updatePassword = async password => {
         await auth.currentUser.updatePassword(password);
     }
@@ -46,6 +68,10 @@ function UserEditScreen(props) {
     const updateEmail = async email => {
         await auth.currentUser.updateEmail(email);
     }
+    
+    useEffect(() => {
+        userdataUpdateStatus === 'success' && navigation.goBack()
+    }, [userdataUpdateStatus])
     
     const initialValues = {
         email: user.email,
@@ -58,68 +84,70 @@ function UserEditScreen(props) {
     
     return (
         <Screen>
-            <Wrapper>
-                <H3 style={{ marginBottom: rem(2) }}>Edit profile</H3>
-                <Form
-                    onSubmit={handleSubmit}
-                    initialValues={ initialValues }
-                >
-                    <FormField
-                        name="username"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        placeholder="Username"
-                        textContextType="username"
-                    />
-                    <FormField
-                        name="email"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType="email-address"
-                        placeholder="Email"
-                        textContextType="emailAddress"
-                    />
-                    <FormField 
-                        name="password"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType="default"
-                        placeholder="Password"
-                        textContextType="password"
-                        secureTextEntry
-                    />
-                    <FormField
-                        name="firstname"
-                        autoCapitalize="words"
-                        autoCorrect={false}
-                        placeholder="Firstname"
-                        textContextType="firstname"
-                    />
-                    <FormField
-                        name="lastname"
-                        autoCapitalize="words"
-                        autoCorrect={false}
-                        placeholder="Firstname"
-                        textContextType="lastname"
-                    />
-                    <FormField
-                        name="address"
-                        autoCapitalize="none"
-                        autoCorrect={true}
-                        placeholder="Address"
-                        textContextType="streetAddressLine1"
-                    />
-                    <FormField
-                        name="zip"
-                        autoCapitalize="none"
-                        autoCorrect={true}
-                        placeholder="Zipcode"
-                        textContextType="postalCode"
-                    />
-                    <FormSubmit title="Save changes" />
-                    <AppButton theme="simple" style={{ marginTop: rem(.5) }} labelStyle={{ color: 'white' }} title="Discard changes" onPress={() => navigation.goBack()} />
-                </Form>
-            </Wrapper>
+            <AvoidKeyboard>
+            <H3 style={{ marginVertical: rem(2) }}>Edit profile</H3>
+            <Form
+                onSubmit={handleSubmit}
+                initialValues={ initialValues }
+                validationSchema={ validationSchema }
+            >
+                <FormField
+                    name="username"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholder="Username"
+                    textContextType="username"
+                />
+                <FormField
+                    name="email"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="email-address"
+                    placeholder="Email"
+                    textContextType="emailAddress"
+                />
+                <FormField 
+                    name="password"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="default"
+                    placeholder="Password"
+                    textContextType="password"
+                    secureTextEntry
+                />
+                <FormField
+                    name="firstname"
+                    autoCapitalize="words"
+                    autoCorrect={false}
+                    placeholder="Firstname"
+                    textContextType="firstname"
+                />
+                <FormField
+                    name="lastname"
+                    autoCapitalize="words"
+                    autoCorrect={false}
+                    placeholder="Firstname"
+                    textContextType="lastname"
+                />
+                <FormField
+                    name="address"
+                    autoCapitalize="none"
+                    autoCorrect={true}
+                    placeholder="Address"
+                    textContextType="streetAddressLine1"
+                />
+                <FormField
+                    name="zip"
+                    autoCapitalize="none"
+                    autoCorrect={true}
+                    placeholder="Zipcode"
+                    textContextType="postalCode"
+                    keyboardType="number-pad"
+                />
+                <FormSubmit title="Save changes" />
+                <AppButton theme="simple" style={{ marginTop: rem(.5) }} labelStyle={{ color: 'white' }} title="Discard changes" onPress={() => navigation.goBack()} />
+            </Form>
+            </AvoidKeyboard>
         </Screen>
     );
 }

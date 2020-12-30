@@ -7,6 +7,7 @@ import { useAuth } from '../firebase/auth';
 
 function LoggedInCheck({ is, isNot }) {
     const { user, noUserFound } = useAuth()
+    
     useEffect(() => {
         registerForPushNotifications().then((resp) => console.log({ resp }))
     }, [])

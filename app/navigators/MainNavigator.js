@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View , StyleSheet, KeyboardAvoidingView, StatusBar, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, TouchableOpacity} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Modal from 'react-native-modal';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
-import { ChannelOverviewScreen, ChannelMessagesScreen, ChannelDetailScreen } from '../screens';
+import { ChannelOverviewScreen, ChannelMessagesScreen, ChannelEditScreen } from '../screens';
 import { colors, screenHeader } from '../config/defaultStyles';
-import { AppButton, Form, FormField, FormImageInput, FormSubmit, H4, Wrapper } from '../components';
+import { AppButton, Form, FormField, FormImageInput, FormSubmit, H4, Wrapper, ChannelEditButton } from '../components';
 import { rem, vh } from '../utils';
 import { useKeyboardHeight, useAvatar } from '../hooks';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { useAuth } from '../firebase/auth';
-import { storage } from '../firebase/firebase';
 
 const Stack = createStackNavigator();
 
@@ -60,13 +58,25 @@ function MainNavigator(props) {
                     title: 'Channels',
                     headerShown: true,
                     headerRight: () => <TouchableOpacity onPress={() => setModal(!modal)}>
-                        <MaterialIcons name="group-add" size={ rem(1.7) } color="white" />
+                        {/* <MaterialIcons name="group-add" size={ rem(1.7) } color={ colors.grey400 } /> */}
+                        <MaterialIcons name="add-circle" size={ rem(1.7) } color={ colors.grey400 } />
                     </TouchableOpacity>,
                     ...screenHeader,
                 }}/>
-                <Stack.Screen name="channelMessages" component={ChannelMessagesScreen} options={({ route: { params } }) => ({
+                <Stack.Screen name="channelMessages" component={ChannelMessagesScreen} options={({ route: { params }, navigation }) => ({
+                    headerRightContainerStyle: {
+                        paddingRight: rem(1)
+                    },
+                    headerTitle: '# ' + params.channel_name,
+                    headerRight: () => <ChannelEditButton channelId={ params.id } onPress={() => navigation.navigate('editChannel', params)} />,
                     ...screenHeader,
-                    headerTitle: '# ' + params.channel_name
+                })} />
+                <Stack.Screen name="editChannel" component={ChannelEditScreen} options={({ route: { params } }) => ({
+                    headerRightContainerStyle: {
+                        paddingRight: rem(1)
+                    },
+                    headerTitle: 'Edit' + ' # ' + params.channel_name,
+                    ...screenHeader,
                 })} />
             </Stack.Navigator>
             <Modal 
@@ -93,6 +103,7 @@ function MainNavigator(props) {
                             <FormImageInput 
                                 name="avatar"
                                 style={{ alignSelf: 'center', marginBottom: rem(1) }}
+                                iconStyle={{ borderColor: colors.dark300, backgroundColor: colors.dark700 }}
                             />
                             <FormField 
                                 name="channelName"

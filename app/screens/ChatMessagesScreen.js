@@ -1,8 +1,9 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { FlatList, Text, Modal, Image } from 'react-native';
+import { FlatList, Text, Modal, Image, View } from 'react-native';
 
 import { AppButton, ChatForm, Message, Screen, Wrapper } from '../components';
+import { border } from '../config/defaultStyles';
 import { useAuth } from '../firebase/auth';
 import { useFirebaseStorage } from '../firebase/useFirebaseStorage';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
@@ -54,30 +55,27 @@ function ChatMessagesScreen(props) {
         return <LoadingScreen />
     } else return (
         <Screen ignore>
-            <Wrapper style={{ paddingHorizontal: 0, paddingVertical: 0 }}> 
-                <FlatList 
-                    style={{ padding: rem(1), paddingTop: rem(.5), height: '100%' }}
-                    contentContainerStyle={{ paddingBottom: rem(1) }}
-                    data={ messagesData }
-                    keyExtractor={ m => m.id }
-                    inverted
-                    refreshing={ refreshing }
-                    showsVerticalScrollIndicator={ false }
-                    renderItem={({ item }) =>
-                        item.content && <Message
-                            data={ item }
-                            isSender={ item.sender == user.uid && true }
-                        />
-                    }
-                />
-                <ChatForm 
-                    messagePath={`chats/${chatId}/messages`} 
-                    containerStyle={{ 
-                        paddingTop: rem(1), 
-                        paddingHorizontal: rem(1),
-                    }}
-                />
-            </Wrapper>
+            <FlatList 
+                contentContainerStyle={{ padding: rem(1)  }}
+                data={ messagesData }
+                keyExtractor={ m => m.id }
+                inverted
+                refreshing={ refreshing }
+                showsVerticalScrollIndicator={ false }
+                renderItem={({ item }) =>
+                    item.content && <Message
+                        data={ item }
+                        isSender={ item.sender == user.uid && true }
+                    />
+                }
+            />
+            <ChatForm 
+                messagePath={`chats/${chatId}/messages`} 
+                containerStyle={{ 
+                    paddingTop: rem(1), 
+                    paddingHorizontal: rem(1),
+                }}
+            />
         </Screen>
     );
 }

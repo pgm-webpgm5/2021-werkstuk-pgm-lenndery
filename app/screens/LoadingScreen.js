@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         height: '100%',
-        backgroundColor: null
+        backgroundColor: colors.dark500
     },
     indicator: {
         transform: [{ translateY: (rem(3)/2)*-1 }]

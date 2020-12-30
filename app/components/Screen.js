@@ -7,14 +7,7 @@ import { rem } from '../utils';
 function Screen ({ children, title, backgroundColor = colors.background, style, ignore }) {
     return (
         <SafeAreaView style={[styles.screen, style, ignore && styles.ignore ]}>
-                <View>
-                    <KeyboardAvoidingView
-                        behavior="position"
-                        keyboardVerticalOffset={ Platform.OS === 'ios' ? 0 : 0 }
-                    >
-                            { children }
-                    </KeyboardAvoidingView>
-                </View>
+            { children }
         </SafeAreaView>
     );
 }
@@ -22,8 +15,9 @@ function Screen ({ children, title, backgroundColor = colors.background, style, 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+        height: '100%',
         width: '100%',
-        // height: '100%',
+        padding: rem(2),
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         backgroundColor: colors.background,
     },
@@ -32,7 +26,8 @@ const styles = StyleSheet.create({
         padding: rem(1),
     },
     ignore: {
-        paddingTop: rem(0)
+        padding: rem(0),
+        paddingTop: 0
     }
 })
 

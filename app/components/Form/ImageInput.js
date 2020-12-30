@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import { circular, colors } from '../../config/defaultStyles';
+import { border, circular, colors } from '../../config/defaultStyles';
 import { rem } from '../../utils';
 
-function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => null, style }) {
+function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => null, style, iconStyle }) {
     const requestPermission = async () => {
         // const result = Permissions.askAsync(Permissions.MEDIA_LIBRARY);
         const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -23,8 +23,8 @@ function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => nu
             'Avatar', 
             'Do you want to change your avatar?',
             [
-                {text: 'Delete avatar', onPress: () => onChangeImage(null)},
-                {text: 'Change avatar', onPress: selectImage}
+                { text: 'Delete avatar', onPress: () => onChangeImage(null) },
+                { text: 'Change avatar', onPress: selectImage }
             ], { cancelable: true }
         )
     }
@@ -43,12 +43,15 @@ function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => nu
     
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
-            <View style={[ styles.container, style ]}>
-                {
-                    sourceUri ? 
-                    <Image source={{ uri: sourceUri }} style={ styles.image } /> :
-                    <MaterialCommunityIcons name="camera-image" size={rem(2.2)} color="white" />
-                }
+            <View style={ styles.container }>  
+                <View style={[ styles.wrapper, style ]}>
+                    {
+                        sourceUri ? 
+                        <Image source={{ uri: sourceUri }} style={ styles.image } /> :
+                        <MaterialCommunityIcons name="camera-image" size={rem(2.2)} color="white" />
+                    }
+                </View>
+                <MaterialIcons name="mode-edit" size={ rem(1.1) } color="white" style={[ styles.editIcon, iconStyle ]} />
             </View>
         </TouchableWithoutFeedback>
     );
@@ -56,6 +59,10 @@ function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => nu
 
 const styles = StyleSheet.create({
     container: {
+        position: 'relative',
+        alignSelf: 'center'
+    },
+    wrapper: {
         alignItems: 'center',
         justifyContent: 'center',
         ...circular(100),
@@ -65,6 +72,16 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
+    },
+    editIcon: {
+        position: 'absolute',
+        backgroundColor: colors.dark300,
+        alignSelf: 'flex-end',
+        padding: rem(.2),
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        ...circular(35),
+        ...border(3, 'solid', colors.dark500)
     }
 })
 

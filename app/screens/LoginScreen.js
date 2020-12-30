@@ -33,7 +33,7 @@ function LoginScreen(props) {
     return (
         <>
             <Screen>
-                <Wrapper style={ styles.wrapper }> 
+                <Wrapper style={[ styles.wrapper, { padding: 0 }]}> 
                     {/* <LogoLight style={[ logo, styles.logo, { width: vw(40)} ]}/> */}
                     <LogoIcon style={[ styles.logo ]}/>
                     <H3 style={{ fontWeight: 'bold' }}>Welcome back</H3>
@@ -62,7 +62,7 @@ function LoginScreen(props) {
                         />
                         <FormSubmit title="Next" />
                     </Form>
-                    {/* <AppButton theme="simple" style={{ marginTop: rem(1), alignSelf: 'center' }} title="I'm new here" onPress={() => navigation.navigate('register') }/> */}
+                    <AppButton theme="secondary" style={{ marginTop: rem(2) }} title="I'm new here" materialIcon="navigate-next" onPress={() => navigation.navigate('register') }/>
                 </Wrapper>
             </Screen>
         </>

@@ -21,7 +21,7 @@ function UsersNavigator(props) {
                     component={UsersOverviewScreen}
                     options={{
                         title: 'Users',
-                        ...screenHeader
+                        ...screenHeader,
                     }}
                 />
                 <Stack.Screen
