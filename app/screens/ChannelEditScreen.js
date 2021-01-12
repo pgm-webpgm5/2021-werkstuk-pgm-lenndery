@@ -3,12 +3,13 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import * as Linking from 'expo-linking'
 
-import { AvoidKeyboard, Screen, H3, Form, FormField, FormSubmit, Wrapper, AppButton } from '../components';
+import { AvoidKeyboard, Screen, Form, FormField, FormSubmit, Wrapper, AppButton } from '../components';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 import LoadingScreen from './LoadingScreen';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { Alert } from 'react-native';
 import { rem } from '../utils';
+import { useAuth } from '../firebase/auth';
 
 function ChannelEditScreen(props) {
     const { params } = useRoute();
@@ -16,6 +17,8 @@ function ChannelEditScreen(props) {
     const { data: channelData } = useFirestoreQuery(fs => fs.doc(`channels/${ params.id }`));
     const { updateDocument, state: { status: updatedChannelDataState } } = useFirestoreCrud(`channels/${ params.id }`)
     const { deleteDocument, state: { status: deletedChannelDataState } } = useFirestoreCrud(`channels/${ params.id }`)
+    const { logout, user } = useAuth();
+
     
     const handleChannelEdit = data => {
         updateDocument({
@@ -65,7 +68,7 @@ function ChannelEditScreen(props) {
                         'This action can\'t be undone.',
                         [
                             { text: 'Confirm delete', onPress: handleChannelDelete },
-                            { text: 'Not shure', onPress: () => Linking.openURL('https://www.youtube.com/watch?v=dQw4w9WgXcQy') },
+                            user.easterMode && { text: 'Not shure', onPress: () => Linking.openURL('https://www.youtube.com/watch?v=dQw4w9WgXcQy') },
                             { text: 'Cancel', onPress: () => null }
                         ], { cancelable: true }
                     )} />

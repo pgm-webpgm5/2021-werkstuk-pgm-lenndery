@@ -4,7 +4,7 @@ import * as Permissions from 'expo-permissions';
 
 export default useNotifications = (notificationListener) => {
     useEffect(() => {
-        registerForPushNotifications().then((resp) => console.log({ resp }));
+        registerForPushNotifications();
         notificationListener && Notifications.addNotificationResponseReceivedListener(notificationListener);
         
         return () => Notifications.removeNotificationSubscription(notificationListener);
@@ -16,7 +16,6 @@ export default useNotifications = (notificationListener) => {
             if (!granted) return;
             
             const token = await Notifications.getExpoPushTokenAsync();
-            console.log({ token })
         } catch (err) {
             console.log({ err });
         }  

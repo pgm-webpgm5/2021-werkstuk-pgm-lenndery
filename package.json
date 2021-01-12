@@ -23,11 +23,14 @@
     "expo-clipboard": "^1.0.1",
     "expo-file-system": "~9.3.0",
     "expo-image-picker": "~9.2.0",
+    "expo-linking": "~2.0.0",
+    "expo-notifications": "~0.8.2",
     "expo-permissions": "~10.0.0",
     "expo-status-bar": "~1.0.3",
     "file-extension": "^4.0.5",
     "firebase": "^8.2.1",
     "formik": "^2.2.6",
+    "lottie-react-native": "~2.6.1",
     "mime-types": "^2.1.27",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -44,10 +47,7 @@
     "react-native-toast-message": "^1.4.2",
     "react-native-web": "~0.13.12",
     "uuid": "^8.3.2",
-    "yup": "^0.32.8",
-    "expo-notifications": "~0.8.2",
-    "expo-linking": "~2.0.0",
-    "lottie-react-native": "~2.6.1"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

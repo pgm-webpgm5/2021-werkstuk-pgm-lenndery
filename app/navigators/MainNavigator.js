@@ -6,7 +6,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import { ChannelOverviewScreen, ChannelMessagesScreen, ChannelEditScreen } from '../screens';
 import { colors, screenHeader } from '../config/defaultStyles';
-import { AppButton, Form, FormField, FormImageInput, FormSubmit, H4, Wrapper, ChannelEditButton } from '../components';
+import { AppButton, Form, FormField, FormImageInput, FormSubmit, Wrapper, ChannelEditButton, AppTitle } from '../components';
 import { rem, vh } from '../utils';
 import { useKeyboardHeight, useAvatar } from '../hooks';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
@@ -96,7 +96,7 @@ function MainNavigator(props) {
             >
                 <View style={ styles.modalContainer }> 
                     <Wrapper style={ styles.modalWrapper }>
-                        <H4 style={{ marginBottom: rem(1) }}>New channel</H4>
+                        <AppTitle h="4" style={{ marginBottom: rem(1) }}>New channel</AppTitle>
                         <Form
                             onSubmit={handleChannelCreation}
                         >

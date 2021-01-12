@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { Label, Screen, H4, Form, FormField, Wrapper, H3, H5, FormSubmit } from '../components';
+import { Label, Screen, Form, FormField, Wrapper, FormSubmit, AppTitle } from '../components';
 import { LogoLight, LogoIcon } from '../assets'
 import { logo } from '../config/defaultStyles';
 import { rem, vh, vw } from '../utils';
@@ -19,8 +19,8 @@ function RegisterScreen(props) {
             <Wrapper style={[ styles.wrapper, { padding: 0 }]}> 
                 {/* <LogoLight style={[ logo, styles.logo, { width: vw(40)} ]}/> */}
                 <LogoIcon style={[ styles.logo ]}/>
-                <H3 style={{ fontWeight: 'bold' }}>Hi there</H3>
-                <H3>Let's set you up.</H3>
+                <AppTitle h="3" style={{ fontWeight: 'bold' }}>Hi there</AppTitle>
+                <AppTitle h="3">Let's set you up.</AppTitle>
                 <Form
                     style={{ marginTop: rem(4) }}
                     onSubmit={ handleRegister }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image, Text } from 'react-native';
 
-import { AppText, AvatarBadge, H4, H5, Strong } from '.';
+import { AppText, AvatarBadge, Strong, AppTitle } from '.';
 import { colors, circular } from '../config/defaultStyles';
 import { useAuth } from '../firebase/auth';
 import { storage } from '../firebase/firebase';
@@ -40,7 +40,7 @@ function ChannelCard({ onPress, data }) {
             <View style={ styles.container }>
                 <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent="3" uri={ avatar } />
                 <View style={ styles.channelInfo }>
-                    <H5 style={ styles.channelName }># { data.channel_name }</H5>
+                    <AppTitle h="5" style={ styles.channelName }># { data.channel_name }</AppTitle>
                     { lastMessage && <AppText style={ styles.channelLastMessagePreview }>
                         <Strong>{lastAuthor && 'You: '}</Strong> { lastMessageType !== 'photo' ? 
                         `${(lastMessageText).substring(0, 30)}...` :

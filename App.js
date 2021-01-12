@@ -8,7 +8,7 @@ import * as Notifications from 'expo-notifications';
 import { colors } from './app/config/defaultStyles';
 import { toastConfig } from './app/config/toastConfig';
 import { SplashScreen, ChannelOverviewScreen, ChannelMessagesScreen, LoginScreen, WelcomeScreen, RegisterScreen } from './app/screens';
-import { LoggedInCheck, AvoidKeyboard, H2, AppInput } from './app/components';
+import { LoggedInCheck, AvoidKeyboard, AppInput } from './app/components';
 import { IntroductionNavigator, MainNavigator, MainTabNavigator } from './app/navigators';
 import { useAuth, AuthProvider } from './app/firebase/auth';
 import { vh } from './app/utils';

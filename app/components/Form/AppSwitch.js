@@ -5,11 +5,11 @@ import { AppText } from '..';
 import { colors } from '../../config/defaultStyles';
 import { rem } from '../../utils';
 
-function AppSwitch({ label, value = () => null }) {
-    const [ switchState, setSwitchState ] = useState(true);
+function AppSwitch({ label, onValueChange = () => null, defaultState = true }) {
+    const [ switchState, setSwitchState ] = useState(defaultState);
     
     useEffect(() => {
-        value(switchState)
+        onValueChange(switchState)
     }, [switchState])
     
     return (
@@ -18,7 +18,9 @@ function AppSwitch({ label, value = () => null }) {
             <Switch trackColor={{
                 true: "#A31E2D30",
                 false: colors.dark700,
-            }} thumbColor={ colors.primary } value={ switchState } onValueChange={() => setSwitchState(!switchState)}/>
+            }} thumbColor={
+                switchState ? colors.primary : colors.dark300
+            } value={ switchState } onValueChange={() => setSwitchState(!switchState)}/>
         </View>
     );
 }

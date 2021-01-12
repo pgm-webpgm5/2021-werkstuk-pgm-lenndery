@@ -8,12 +8,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Screen, ChannelCard, AppInput, Form, FormField, FormSubmit, AppText, Label } from '../components';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem } from '../utils';
+import { useAuth } from '../firebase/auth';
 
 function ChannelOverviewScreen(props) {
     const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState(false)
     const [ searched, setSearched ] = useState(false);
     const { data, refetch } = useFirestoreQuery(fs => fs.collection('channels'))
+    const { logout, user } = useAuth();
     
     const handleSearch = ({ query }) => {
         if (query && searched) {
@@ -47,7 +49,7 @@ function ChannelOverviewScreen(props) {
                     })}/>
                 }
                 ListEmptyComponent={(e) =>
-                    <TouchableOpacity onPress={() => Linking.openURL('https://www.youtube.com/watch?v=mTo8GiPQdPs')} activeOpacity={.6}>
+                    <TouchableOpacity onPress={() => user.easterMode && Linking.openURL('https://www.youtube.com/watch?v=mTo8GiPQdPs')} activeOpacity={.6}>
                         <LottieView
                             style={{
                                 width: 400,

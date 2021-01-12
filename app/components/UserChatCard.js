@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image, Text } from 'react-native';
 
-import { AppText, AvatarBadge, H4, H5, Strong, UserAvatarBadge } from '.';
+import { AppText, AvatarBadge, Strong, UserAvatarBadge, AppTitle } from '.';
 import { colors, circular } from '../config/defaultStyles';
 import { useAuth } from '../firebase/auth';
 import { storage } from '../firebase/firebase';
@@ -21,12 +21,12 @@ function ChannelCard({ onPress, data }) {
             <View style={ styles.container }>
                 <UserAvatarBadge uri={ userAvatarUri } status={ data.activity } lastActive={ data.last_activity?.seconds || 0 } style={{ marginRight: rem(1.4) }} />
                 <View style={ styles.channelInfo }>
-                    <H5 style={ styles.channelName }>{ data.username }</H5>
+                    <AppTitle h="5" style={ styles.channelName }>{ data.username }</AppTitle>
                     {/* { lastMessage && <AppText style={ styles.channelLastMessagePreview }><Strong>{lastAuthor && 'You: '}</Strong> {(lastMessageText).substring(0, 30)}...</AppText> } */}
                 </View>
                 {/* <AvatarBadge style={{ marginRight: rem(1.4) }} uri={ avatar } />
                 <View style={ styles.channelInfo }>
-                    <H5 style={ styles.channelName }># { data.channel_name }</H5>
+                    <AppTitle h="5" style={ styles.channelName }># { data.channel_name }</AppTitle>
                     { lastMessage && <AppText style={ styles.channelLastMessagePreview }><Strong>{lastAuthor && 'You: '}</Strong> {(lastMessageText).substring(0, 30)}...</AppText> }
                 </View> */}
             </View>

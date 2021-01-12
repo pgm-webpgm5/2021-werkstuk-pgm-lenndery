@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup';
 
-import { Screen, Wrapper, Form, FormField, H3, FormSubmit, AppButton, AvoidKeyboard } from '../components';
+import { Screen, Wrapper, Form, FormField, FormSubmit, AppButton, AvoidKeyboard, AppTitle } from '../components';
 import { useAuth } from '../firebase/auth';
 import { rem } from '../utils';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
@@ -45,9 +45,7 @@ function UserEditScreen(props) {
             // remove sensitive data
             delete checkedData.email
             delete checkedData.password
-            
-            console.log( checkedData )
-            
+                        
             await updateUserdata(checkedData)
             Toast.show({
                 text1: 'We\'ve updated you\'re profile',
@@ -85,7 +83,7 @@ function UserEditScreen(props) {
     return (
         <Screen>
             <AvoidKeyboard>
-            <H3 style={{ marginVertical: rem(2) }}>Edit profile</H3>
+            <AppTitle h="3" style={{ marginVertical: rem(2) }}>Edit profile</AppTitle>
             <Form
                 onSubmit={handleSubmit}
                 initialValues={ initialValues }

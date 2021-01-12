@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Image } from 'react-native';
 
-import { Form, H4, Label, Screen, Wrapper } from '../components';
+import { Form, Label, Screen, Wrapper, AppTitle } from '../components';
 import { rem, vw } from '../utils';
 import { colors } from '../config/defaultStyles';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
@@ -17,7 +17,7 @@ function ChannelDetailScreen({ channelId }) {
                 <LoadingScreen/> : 
                 <Screen ignore>
                     <Wrapper style={{ backgroundColor: colors.dark800 , height: '100%'}}>
-                        <H4 style={{ marginBottom: rem(2) }}># { channelData.channel_name }</H4>
+                        <AppTitle h="4" style={{ marginBottom: rem(2) }}># { channelData.channel_name }</AppTitle>
                         <Label>Users</Label>
                     </Wrapper>
                 </Screen>

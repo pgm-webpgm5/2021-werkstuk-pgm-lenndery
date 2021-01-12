@@ -18,7 +18,6 @@ function LoggedInCheck({ is, isNot }) {
             if (!granted) return;
             
             const token = await Notifications.getExpoPushTokenAsync();
-            console.log({ token })
         } catch (err) {
             console.log({ err });
         }

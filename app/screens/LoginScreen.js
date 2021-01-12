@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Yup from 'yup';
+import Toast from 'react-native-toast-message';
 
-import { Label, Screen, H4, Form, FormField, Wrapper, H3, H5, FormSubmit, AppButton, FormError } from '../components';
+import { Label, Screen, Form, FormField, Wrapper, FormSubmit, AppButton, FormError, AppTitle } from '../components';
 import { LogoIcon } from '../assets'
 import { rem, vh, vw } from '../utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../firebase/auth';
+
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label('Email'),
@@ -16,11 +17,14 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen(props) {
     const navigation = useNavigation()
-    const { login } = useAuth()
+    const { login, noUserFound } = useAuth()
     
     const handleLogin = ({email, password}) => {
-        console.log('LOGIN')
         login(email, password);
+        (noUserFound == true) && Toast.show({
+            text1: 'We couldn\'t find this user',
+            position: 'bottom'
+        });
     }
      
     return (
@@ -29,8 +33,8 @@ function LoginScreen(props) {
                 <Wrapper style={[ styles.wrapper, { padding: 0 }]}> 
                     {/* <LogoLight style={[ logo, styles.logo, { width: vw(40)} ]}/> */}
                     <LogoIcon style={[ styles.logo ]}/>
-                    <H3 style={{ fontWeight: 'bold' }}>Welcome back</H3>
-                    <H3>Let's sign you in.</H3>
+                    <AppTitle h="3" style={{ fontWeight: 'bold' }}>Welcome back</AppTitle>
+                    <AppTitle h="3">Let's sign you in.</AppTitle>
                     <Form
                         style={{ marginTop: rem(4) }}
                         onSubmit={ handleLogin }

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         ...circular(35),
-        ...border(3, 'solid', colors.dark500)
+        ...border(4, 'solid', colors.dark500)
     }
 })
 
