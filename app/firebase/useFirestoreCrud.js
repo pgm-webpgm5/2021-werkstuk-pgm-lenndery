@@ -63,15 +63,6 @@ export const useFirestoreCrud = (documentPath = '') => {
         } catch (err) {
             dispatch({ type: "error", payload: err })
         }
-        
-        // firestore.collection(path)
-        // .add(data)
-        // .then(async (createdDoc) =>{ 
-        //     const resp = await createdDoc.get();
-        //     const returnedData = resp.data();
-        //     dispatch({ type: "success", payload: returnedData })
-        // })
-        // .catch(err => dispatch({ type: "error", payload: err }))
     }
     
     const updateDocument = async (data, path = documentPath) => {

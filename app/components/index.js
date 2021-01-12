@@ -11,6 +11,7 @@ import UserAvatarBadge from './UserAvatarBadge';
 import UserChatCard from './UserChatCard';
 import ChatForm from './ChatForm';
 import ChannelEditButton from './ChannelEditButton';
+import AppTitle from './AppTitle';
 
 import H1 from './Headings/H1';
 import H2 from './Headings/H2';
@@ -59,5 +60,6 @@ export {
     UserAvatarBadge,
     UserChatCard,
     ChatForm,
-    ChannelEditButton
+    ChannelEditButton,
+    AppTitle
 }

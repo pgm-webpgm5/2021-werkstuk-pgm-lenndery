@@ -16,13 +16,19 @@ function ChatMessagesScreen(props) {
     const [ chatId, setChatId ] = useState(null);
     const { params } = useRoute();
     const { user } = useAuth()
+    
+    // get chat data
     const { data, refetch: refetchChatData } = useFirestoreQuery(fs => fs.collection('chats')
         .where("participants", "in", [
-            [ user && user.uid, params.actor ], 
+            [ user && user.uid, params.actor ],
             [ params.actor, user && user.uid ],
         ])
     );
-    const { addDocument: addNewChat, state: { data: addNewChatData, status: addNewChatStatus } } = useFirestoreCrud(`chats`)
+    
+    // used for creating new chat
+    const { addDocument: addNewChat, state: { data: addNewChatData, status: addNewChatStatus } } = useFirestoreCrud(`chats`);
+    
+    // get 
     const { fetchQuery: fetchMessages, data: messagesData } = useLazyFirestoreQuery();
     
     const handleNewChat = chatData => {
@@ -36,6 +42,11 @@ function ChatMessagesScreen(props) {
             ]})
         }
     }
+    
+    /**
+     * check if chat exists
+     * if not, create chat, otherwise load chat
+     */
 
     useEffect(() => {
         if (data) {

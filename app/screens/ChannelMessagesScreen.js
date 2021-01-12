@@ -15,13 +15,13 @@ import { ChannelDetailScreen } from '.';
 function ChannelMessagesScreen(props) {
     const loadOffsetToAdd = 5;
     
-    const { params } = useRoute()
+    const { params } = useRoute();
     const { user } = useAuth();
     const [ refreshing, setRefreshing ] = useState(false);
     const swipable = useRef();
     
     const { state, deleteDocument, addDocument, setDocumentByID } = useFirestoreCrud(`channels/${params.id}/messages`);
-    const { data: messagesData } = useFirestoreQuery(fs => fs.doc(`channels/${params.id}`).collection('messages').orderBy("timestamp", "desc"));
+    const { data: messagesData } = useFirestoreQuery(fs => fs.collection(`channels/${params.id}/messages`).orderBy("timestamp", "desc"));
     const { getDownloadURL, state: { data: channelAvatarUri } } = useFirebaseStorage(`channel-avatars/${params.id}.jpg`)
     
     useEffect(() => {
