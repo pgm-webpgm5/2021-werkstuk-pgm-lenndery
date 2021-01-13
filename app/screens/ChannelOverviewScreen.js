@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import * as Linking from 'expo-linking'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,7 +11,6 @@ import { useAuth } from '../firebase/auth';
 import { firebase } from '../firebase/firebase';
 
 function ChannelOverviewScreen(props) {
-    const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState(false)
     const [ searched, setSearched ] = useState(false);
     const { data, refetch: refetchChannels } = useFirestoreQuery(fs => fs.collection('channels').limit(30))
