@@ -3,12 +3,13 @@ import { FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import * as Linking from 'expo-linking'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Screen, Form, FormField, FormSubmit, AppText, Label, PinChannel, FormReset } from '../components';
+import { Screen, Form, FormField, FormSubmit, AppText, Label, PinChannel, FormReset, AppButton } from '../components';
 import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem } from '../utils';
 import { useAuth } from '../firebase/auth';
+import { firebase } from '../firebase/firebase';
 
 function ChannelOverviewScreen(props) {
     const navigation = useNavigation();
@@ -17,8 +18,10 @@ function ChannelOverviewScreen(props) {
     const { data, refetch: refetchChannels } = useFirestoreQuery(fs => fs.collection('channels').limit(30))
     const [ sortedChannels, setSortedChannels ] = useState(data);
     const { logout, user } = useAuth();
+    const [ showOnlyPinned, setShowOnlyPinned ] = useState(false);
     
     const handleSearch = ({ query } = {}) => {
+        setShowOnlyPinned(false);
         if (!query) { // show all channels if no query supplied
             setSearched(false)
             refetchChannels()
@@ -26,6 +29,12 @@ function ChannelOverviewScreen(props) {
             setSearched(true)
             refetchChannels(fs => fs.collection('channels').where("channel_name", "==", query))
         }
+    }
+    
+    const getPinnedChannels = () => {
+        setSearched(false)
+        if (showOnlyPinned) refetchChannels()
+        else refetchChannels(fs => fs.collection('channels').where(firebase.firestore.FieldPath.documentId(), "in", user.pinnedChannels))
     }
     
     useEffect(() => {
@@ -54,15 +63,22 @@ function ChannelOverviewScreen(props) {
                     containerStyle={{ flex: 1 }}
                     resetOnSend
                 />
-                {searched ? <FormReset style={{ backgroundColor: null }} onPress={() => {
-                    handleSearch() 
-                    setSearched(false)
-                }}>
-                    <MaterialIcons name="clear" size={ rem(1.6) } color="white" />
-                </FormReset> :
-                <FormSubmit style={{ backgroundColor: null }}>
-                    <MaterialIcons name="search" size={ rem(1.6) } color="white" />
-                </FormSubmit>}
+                { searched ? 
+                    <FormReset style={{ backgroundColor: null }} onPress={() => {
+                        handleSearch() 
+                        setSearched(false)
+                    }}><MaterialIcons name="clear" size={ rem(1.6) } color="white" /></FormReset> :
+                    <FormSubmit style={{ backgroundColor: null }}>
+                        <MaterialIcons name="search" size={ rem(1.6) } color="white" />
+                    </FormSubmit>
+                }
+                <AppButton 
+                    style={{ backgroundColor: null, paddingLeft: 0 }} 
+                    title={<MaterialCommunityIcons name={ showOnlyPinned ? 'pin' : 'pin-outline'} size={24} color="white" />} 
+                    onPress={() => {
+                        getPinnedChannels();
+                        setShowOnlyPinned(prev => !prev);
+                    }} />
             </Form>
             <FlatList
                 data={ sortedChannels }
