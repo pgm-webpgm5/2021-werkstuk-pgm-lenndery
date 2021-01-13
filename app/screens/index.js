@@ -11,6 +11,7 @@ import UsersOverviewScreen from './UsersOverviewScreen'
 import ChatMessagesScreen from './ChatMessagesScreen'
 import UserEditScreen from './UserEditScreen'
 import ChannelEditScreen from './ChannelEditScreen'
+import UserEditLoginScreen from './UserEditLoginScreen'
 
 export {
     SplashScreen,
@@ -25,5 +26,6 @@ export {
     UsersOverviewScreen,
     ChatMessagesScreen,
     UserEditScreen,
-    ChannelEditScreen
+    ChannelEditScreen,
+    UserEditLoginScreen
 }

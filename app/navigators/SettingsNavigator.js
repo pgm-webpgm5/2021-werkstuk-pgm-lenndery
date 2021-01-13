@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { UserSettingsScreen, UserEditScreen } from '../screens';
+import { UserSettingsScreen, UserEditScreen, UserEditLoginScreen } from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +18,13 @@ function SettingsNavigator(props) {
                 <Stack.Screen 
                     name="editProfile"
                     component={UserEditScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen 
+                    name="editLogin"
+                    component={UserEditLoginScreen}
                     options={{
                         headerShown: false,
                     }}

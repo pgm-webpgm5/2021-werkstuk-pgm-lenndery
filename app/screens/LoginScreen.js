@@ -19,9 +19,9 @@ function LoginScreen(props) {
     const navigation = useNavigation()
     const { login, noUserFound } = useAuth()
     
-    const handleLogin = ({email, password}) => {
-        login(email, password);
-        (noUserFound == true) && Toast.show({
+    const handleLogin = ({ email, password }) => {
+        const { error } = login(email, password);
+        if (error) Toast.show({
             text1: 'We couldn\'t find this user',
             position: 'bottom'
         });

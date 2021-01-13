@@ -8,9 +8,7 @@ import { circular, colors, textCenter } from '../config/defaultStyles';
 import { useAuth } from '../firebase/auth';
 import { useFirebaseStorage } from '../firebase/useFirebaseStorage';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
-import { useFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem } from '../utils';
-import LoadingScreen from './LoadingScreen';
 
 function UserSettingsScreen(props) {    
     const navigation = useNavigation()
@@ -64,11 +62,17 @@ function UserSettingsScreen(props) {
             <Wrapper y style={{ height: null }}>  
                 <AppTitle h="4" style={[ textCenter, { marginBottom: rem(.4) } ]}>{ user.username }</AppTitle>
                 <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
-                <AppButton 
+                <AppButton
                     theme="small" 
                     title="edit profile"
-                    style={{ alignSelf: 'center', marginTop: rem(1) }} 
+                    style={{ marginTop: rem(1), alignSelf: 'center' }}
                     onPress={() => navigation.navigate('editProfile')}
+                    />
+                <AppButton
+                    theme="small" 
+                    title="change password"
+                    style={{ alignSelf: 'center', marginTop: rem(1) }}
+                    onPress={() => navigation.navigate('editLogin')}
                 />
             </Wrapper>
             <Wrapper y style={{ height: null }}>  

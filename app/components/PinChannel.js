@@ -16,7 +16,7 @@ function PinChannel({ item }) {
     const { updateDocument: updatePins } = useFirestoreCrud(`users/${ user.uid }`);
     
     const ref = useRef();
-    const channelIsPinned = user.pinnedChannels.find(id => id === item.id) ? true : false;
+    const channelIsPinned = user.pinnedChannels?.find(id => id === item.id) ? true : false;
     
     return (
         <Swipeable 

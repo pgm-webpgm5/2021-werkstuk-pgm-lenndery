@@ -6,7 +6,9 @@ import { colors, circular, border } from '../config/defaultStyles';
 import { rem } from '../utils';
 import { storage } from '../firebase/firebase'
 
-function AvatarBadge({ uri, badgeContent = '', style = {} }) { 
+function AvatarBadge({ uri, badgeContent = 0, style = {} }) { 
+    const maxBadgeContentCount = 10;
+    
     return (
         <TouchableHighlight>
             <View style={[ style ]}>
@@ -17,7 +19,7 @@ function AvatarBadge({ uri, badgeContent = '', style = {} }) {
                         <MaterialCommunityIcons name="account-group" size={rem(2)} color="white" style={{ transform: [{ translateY: -3 }] }} />
                     </View>
                 }
-                <View style={ styles.badge }><Text style={ styles.badgeContent }>{ badgeContent }</Text></View>
+                {badgeContent > 2 && <View style={ styles.badge }><Text style={ styles.badgeContent }>{ badgeContent > maxBadgeContentCount ? `${maxBadgeContentCount} +` : badgeContent }</Text></View>}
             </View>
         </TouchableHighlight>
     );

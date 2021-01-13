@@ -35,11 +35,14 @@ function ChannelCard({ onPress, data, isPinned }) {
         setAvatarUri(data.id)
     }, [data])
     
+    // simulate random amount unread messages
+    const randomUnreadMessages = Math.floor(Math.random()*11) + 1;
+    
     return (
         <View style={{ backgroundColor: colors.dark500 }}>
             <TouchableOpacity onPress={onPress}>
                 <View style={ styles.container }>
-                    <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent="3" uri={ avatar } />
+                    <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent={ randomUnreadMessages } uri={ avatar } />
                     <View style={ styles.channelInfo }>
                         <AppTitle h="5" style={ styles.channelName }># { data.channel_name }</AppTitle>
                         { lastMessage && <AppText style={ styles.channelLastMessagePreview }>

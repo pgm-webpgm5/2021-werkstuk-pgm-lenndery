@@ -12,7 +12,6 @@ import { auth } from '../firebase/firebase';
 const validationSchema = Yup.object().shape({
     username: Yup.string().min(4).required().label('Username'),
     email: Yup.string().required().email().label('Email'),
-    password: Yup.string().min(4).label('Password'),
     firstname: Yup.string().label('Firstname'),
     lastname: Yup.string().label('Lastname'),
     address: Yup.string().label('Address'),
@@ -103,15 +102,6 @@ function UserEditScreen(props) {
                         keyboardType="email-address"
                         placeholder="Email"
                         textContextType="emailAddress"
-                    />
-                    <FormField 
-                        name="password"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType="default"
-                        placeholder="Password"
-                        textContextType="password"
-                        secureTextEntry
                     />
                     <FormField
                         name="firstname"

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth, firestore } from "./firebase";
+
 import { useFirestoreCrud } from "./useFirestoreCrud.js";
 import { useFirestoreQuery } from "./useFirestoreQuery.js";
 
@@ -23,8 +24,9 @@ export function AuthProvider({ children }) {
     const login = (email, password) => {
         try {
             auth.signInWithEmailAndPassword(email, password);
-        } catch (err) {
-            console.log('LOGIN ERROR', err)
+        } catch (error) {
+            console.log('LOGIN ERROR', error)
+            return { error };
         }
     }
     
