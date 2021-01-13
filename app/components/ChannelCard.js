@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet, Image, Text } from 'react-native';
-
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AppText, AvatarBadge, Strong, AppTitle } from '.';
 import { colors, circular } from '../config/defaultStyles';
 import { useAuth } from '../firebase/auth';
@@ -8,7 +8,7 @@ import { storage } from '../firebase/firebase';
 import { useFirestoreQuery, useLazyFirestoreQuery } from '../firebase/useFirestoreQuery';
 import { rem } from '../utils';
 
-function ChannelCard({ onPress, data }) {
+function ChannelCard({ onPress, data, isPinned }) {
     const [ avatar, setAvatar ] = useState()
     const { user } = useAuth();
     
@@ -36,20 +36,23 @@ function ChannelCard({ onPress, data }) {
     }, [data])
     
     return (
-        <TouchableOpacity onPress={onPress}>
-            <View style={ styles.container }>
-                <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent="3" uri={ avatar } />
-                <View style={ styles.channelInfo }>
-                    <AppTitle h="5" style={ styles.channelName }># { data.channel_name }</AppTitle>
-                    { lastMessage && <AppText style={ styles.channelLastMessagePreview }>
-                        <Strong>{lastAuthor && 'You: '}</Strong> { lastMessageType !== 'photo' ? 
-                        `${(lastMessageText).substring(0, 30)}...` :
-                        (lastAuthor ? 'Image send' : 'Photo recieved')
-                    }
-                    </AppText> }
+        <View style={{ backgroundColor: colors.dark500 }}>
+            <TouchableOpacity onPress={onPress}>
+                <View style={ styles.container }>
+                    <AvatarBadge style={{ marginRight: rem(1.4) }} badgeContent="3" uri={ avatar } />
+                    <View style={ styles.channelInfo }>
+                        <AppTitle h="5" style={ styles.channelName }># { data.channel_name }</AppTitle>
+                        { lastMessage && <AppText style={ styles.channelLastMessagePreview }>
+                            <Strong>{lastAuthor && 'You: '}</Strong> { lastMessageType !== 'photo' ? 
+                            `${(lastMessageText).substring(0, 30)}...` :
+                            (lastAuthor ? 'Image send' : 'Photo recieved')
+                        }
+                        </AppText> }
+                    </View>
+                    { isPinned && <MaterialCommunityIcons name="pin" size={24} color={ colors.grey500 } style={[ styles.pinIcon ]}/> }
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     );
 }
 
@@ -70,6 +73,9 @@ const styles = StyleSheet.create({
     channelLastMessagePreview: {
         color: colors.grey200,
         opacity: .6
+    },
+    pinIcon: {
+        alignSelf: 'center'
     }
 })
 

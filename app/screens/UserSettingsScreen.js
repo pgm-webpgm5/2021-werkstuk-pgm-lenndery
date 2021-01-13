@@ -66,16 +66,23 @@ function UserSettingsScreen(props) {
                 <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
                 <AppButton 
                     theme="small" 
-                    title="edit profile" 
+                    title="edit profile"
                     style={{ alignSelf: 'center', marginTop: rem(1) }} 
                     onPress={() => navigation.navigate('editProfile')}
                 />
             </Wrapper>
             <Wrapper y style={{ height: null }}>  
                 <Label>Notifications</Label>
-                    <AppSwitch label="Private messages" />
-                    <AppSwitch label="Messages from favorite channels" />
-                    <AppSwitch label="Easter mode" defaultState={ false } onValueChange={handleEasterMode}/>
+                <AppSwitch
+                    label="Private messages" 
+                    onValueChange={val => AsyncStorage.setItem('@notificationsPrivate', val)}
+                />
+                <AppSwitch
+                    label="Messages from favorite channels" 
+                    onValueChange={val => AsyncStorage.setItem('@notificationsPinnedChannels', val)}
+                />
+                <Label style={{ marginTop: rem(1.4) }}>Other settings</Label>
+                <AppSwitch label="Easter mode" defaultState={ user.easterMode || false } onValueChange={handleEasterMode}/>
             </Wrapper>
             
             <AppButton theme="opaque" title="Logout" onPress={() => logout()} />

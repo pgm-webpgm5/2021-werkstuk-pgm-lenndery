@@ -83,68 +83,68 @@ function UserEditScreen(props) {
     return (
         <Screen>
             <AvoidKeyboard>
-            <AppTitle h="3" style={{ marginVertical: rem(2) }}>Edit profile</AppTitle>
-            <Form
-                onSubmit={handleSubmit}
-                initialValues={ initialValues }
-                validationSchema={ validationSchema }
-            >
-                <FormField
-                    name="username"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder="Username"
-                    textContextType="username"
-                />
-                <FormField
-                    name="email"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="email-address"
-                    placeholder="Email"
-                    textContextType="emailAddress"
-                />
-                <FormField 
-                    name="password"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="default"
-                    placeholder="Password"
-                    textContextType="password"
-                    secureTextEntry
-                />
-                <FormField
-                    name="firstname"
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                    placeholder="Firstname"
-                    textContextType="firstname"
-                />
-                <FormField
-                    name="lastname"
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                    placeholder="Firstname"
-                    textContextType="lastname"
-                />
-                <FormField
-                    name="address"
-                    autoCapitalize="none"
-                    autoCorrect={true}
-                    placeholder="Address"
-                    textContextType="streetAddressLine1"
-                />
-                <FormField
-                    name="zip"
-                    autoCapitalize="none"
-                    autoCorrect={true}
-                    placeholder="Zipcode"
-                    textContextType="postalCode"
-                    keyboardType="number-pad"
-                />
-                <FormSubmit title="Save changes" />
-                <AppButton theme="simple" style={{ marginTop: rem(.5) }} labelStyle={{ color: 'white' }} title="Discard changes" onPress={() => navigation.goBack()} />
-            </Form>
+                <AppTitle h="3" style={{ marginVertical: rem(2) }}>Edit profile</AppTitle>
+                <Form
+                    onSubmit={handleSubmit}
+                    initialValues={ initialValues }
+                    validationSchema={ validationSchema }
+                >
+                    <FormField
+                        name="username"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder="Username"
+                        textContextType="username"
+                    />
+                    <FormField
+                        name="email"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="email-address"
+                        placeholder="Email"
+                        textContextType="emailAddress"
+                    />
+                    <FormField 
+                        name="password"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="default"
+                        placeholder="Password"
+                        textContextType="password"
+                        secureTextEntry
+                    />
+                    <FormField
+                        name="firstname"
+                        autoCapitalize="words"
+                        autoCorrect={false}
+                        placeholder="Firstname"
+                        textContextType="firstname"
+                    />
+                    <FormField
+                        name="lastname"
+                        autoCapitalize="words"
+                        autoCorrect={false}
+                        placeholder="Firstname"
+                        textContextType="lastname"
+                    />
+                    <FormField
+                        name="address"
+                        autoCapitalize="none"
+                        autoCorrect={true}
+                        placeholder="Address"
+                        textContextType="streetAddressLine1"
+                    />
+                    <FormField
+                        name="zip"
+                        autoCapitalize="none"
+                        autoCorrect={true}
+                        placeholder="Zipcode"
+                        textContextType="postalCode"
+                        keyboardType="number-pad"
+                    />
+                    <FormSubmit title="Save changes" />
+                    <AppButton theme="simple" style={{ marginTop: rem(.5) }} labelStyle={{ color: 'white' }} title="Discard changes" onPress={() => navigation.goBack()} />
+                </Form>
             </AvoidKeyboard>
         </Screen>
     );

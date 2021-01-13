@@ -41,6 +41,7 @@ export function AuthProvider({ children }) {
             setDocumentByID({
                 username: username,
                 activity: 'active',
+                pinnedChannels: [],
                 last_activity: new Date()
             }, `users/${uid}`)
         })
