@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Image, StyleSheet, Switch, Text, View } from 'react-native';
+import { Button, Image, StyleSheet, Switch, Text, View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -51,46 +51,48 @@ function UserSettingsScreen(props) {
     }, [userAvatarUri])
         
     return (
-        <Screen style={{ height: '100%' }}>   
-            <Wrapper t>
-                <ImageInput
-                    style={ styles.userAvatar }
-                    sourceUri={ selectedImage }
-                    onChangeImage={ handleImageUpload }
-                />
-            </Wrapper>           
-            <Wrapper y style={{ height: null }}>  
-                <AppTitle h="4" style={[ textCenter, { marginBottom: rem(.4) } ]}>{ user.username }</AppTitle>
-                <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
-                <AppButton
-                    theme="small" 
-                    title="edit profile"
-                    style={{ marginTop: rem(1), alignSelf: 'center' }}
-                    onPress={() => navigation.navigate('editProfile')}
+        <ScrollView style={{ height: '100%', backgroundColor: colors.dark500 }}>
+            <Screen style={{ height: '100%' }}>   
+                <Wrapper t>
+                    <ImageInput
+                        style={ styles.userAvatar }
+                        sourceUri={ selectedImage }
+                        onChangeImage={ handleImageUpload }
                     />
-                <AppButton
-                    theme="small" 
-                    title="change password"
-                    style={{ alignSelf: 'center', marginTop: rem(1) }}
-                    onPress={() => navigation.navigate('editLogin')}
-                />
-            </Wrapper>
-            <Wrapper y style={{ height: null }}>  
-                <Label>Notifications</Label>
-                <AppSwitch
-                    label="Private messages" 
-                    onValueChange={val => AsyncStorage.setItem('@notificationsPrivate', val)}
-                />
-                <AppSwitch
-                    label="Messages from favorite channels" 
-                    onValueChange={val => AsyncStorage.setItem('@notificationsPinnedChannels', val)}
-                />
-                <Label style={{ marginTop: rem(1.4) }}>Other settings</Label>
-                <AppSwitch label="Easter mode" defaultState={ user.easterMode || false } onValueChange={handleEasterMode}/>
-            </Wrapper>
-            
-            <AppButton theme="opaque" title="Logout" onPress={() => logout()} />
-        </Screen>
+                </Wrapper>           
+                <Wrapper y style={{ height: null }}>  
+                    <AppTitle h="4" style={[ textCenter, { marginBottom: rem(.4) } ]}>{ user.username }</AppTitle>
+                    <AppText style={[ textCenter, { opacity: .6 } ]}>{ user.email }</AppText>
+                    <AppButton
+                        theme="small" 
+                        title="edit profile"
+                        style={{ marginTop: rem(1), alignSelf: 'center' }}
+                        onPress={() => navigation.navigate('editProfile')}
+                        />
+                    <AppButton
+                        theme="small" 
+                        title="change password"
+                        style={{ alignSelf: 'center', marginTop: rem(1) }}
+                        onPress={() => navigation.navigate('editLogin')}
+                    />
+                </Wrapper>
+                <Wrapper y style={{ height: null }}>  
+                    <Label>Notifications</Label>
+                    <AppSwitch
+                        label="Private messages" 
+                        onValueChange={val => AsyncStorage.setItem('@notificationsPrivate', val)}
+                    />
+                    <AppSwitch
+                        label="Messages from favorite channels" 
+                        onValueChange={val => AsyncStorage.setItem('@notificationsPinnedChannels', val)}
+                    />
+                    <Label style={{ marginTop: rem(1.4) }}>Other settings</Label>
+                    <AppSwitch label="Easter mode" defaultState={ user.easterMode || false } onValueChange={handleEasterMode}/>
+                </Wrapper>
+                
+                <AppButton theme="opaque" title="Logout" onPress={() => logout()} />
+            </Screen>
+        </ScrollView>
     );
 }
 

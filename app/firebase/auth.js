@@ -64,16 +64,21 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(async registeredUser => {
             if (registeredUser) {
                 setNoUserFound(false)
+                
+                // find user based on registed user id
                 firestore.doc(`users/${registeredUser.uid}`).onSnapshot(snapshot => {
                     setUser({ 
                         ...registeredUser,
                         ...(snapshot.data() || {} ),
                     });
                 });
+                
+                // set user activity on active
                 updateDocument({
                     activity: 'active',
                     last_activity: new Date()
                 })
+                
                 setLoading(false)
             }
             else {

@@ -24,7 +24,7 @@ function ImageInput({ sourceUri, onChangeImage = () => null, onDelete = () => nu
             'Avatar', 
             'Do you want to change your avatar?',
             [
-                { text: 'Delete avatar', onPress: () => onChangeImage(null) },
+                { text: 'Delete avatar', onPress: onChangeImage(null) },
                 { text: 'Change avatar', onPress: selectImage }
             ], { cancelable: true }
         )
