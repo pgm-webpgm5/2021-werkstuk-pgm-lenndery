@@ -20,15 +20,15 @@ function ChatMessagesScreen(props) {
     // get chat data
     const { data, refetch: refetchChatData } = useFirestoreQuery(fs => fs.collection('chats')
         .where("participants", "in", [
-            [ user && user.uid, params.actor ],
-            [ params.actor, user && user.uid ],
+            [ user.uid, params.actor ],
+            [ params.actor, user.uid ],
         ])
     );
     
     // used for creating new chat
     const { addDocument: addNewChat, state: { data: addNewChatData, status: addNewChatStatus } } = useFirestoreCrud(`chats`);
     
-    // get 
+    // get messages
     const { fetchQuery: fetchMessages, data: messagesData } = useLazyFirestoreQuery();
     
     const handleNewChat = chatData => {
