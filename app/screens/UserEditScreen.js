@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup';
@@ -8,6 +9,7 @@ import { useAuth } from '../firebase/auth';
 import { rem } from '../utils';
 import { useFirestoreCrud } from '../firebase/useFirestoreCrud';
 import { auth } from '../firebase/firebase';
+import { colors } from '../config/defaultStyles';
 
 const validationSchema = Yup.object().shape({
     username: Yup.string().min(4).required().label('Username'),
@@ -78,65 +80,67 @@ function UserEditScreen(props) {
         address: user.address,
         zip: user.zip,
     }
-    
+
     return (
-        <Screen>
-            <AvoidKeyboard>
-                <AppTitle h="3" style={{ marginVertical: rem(2) }}>Edit profile</AppTitle>
-                <Form
-                    onSubmit={handleSubmit}
-                    initialValues={ initialValues }
-                    validationSchema={ validationSchema }
-                >
-                    <FormField
-                        name="username"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        placeholder="Username"
-                        textContextType="username"
-                    />
-                    <FormField
-                        name="email"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType="email-address"
-                        placeholder="Email"
-                        textContextType="emailAddress"
-                    />
-                    <FormField
-                        name="firstname"
-                        autoCapitalize="words"
-                        autoCorrect={false}
-                        placeholder="Firstname"
-                        textContextType="firstname"
-                    />
-                    <FormField
-                        name="lastname"
-                        autoCapitalize="words"
-                        autoCorrect={false}
-                        placeholder="Firstname"
-                        textContextType="lastname"
-                    />
-                    <FormField
-                        name="address"
-                        autoCapitalize="none"
-                        autoCorrect={true}
-                        placeholder="Address"
-                        textContextType="streetAddressLine1"
-                    />
-                    <FormField
-                        name="zip"
-                        autoCapitalize="none"
-                        autoCorrect={true}
-                        placeholder="Zipcode"
-                        textContextType="postalCode"
-                        keyboardType="number-pad"
-                    />
-                    <FormSubmit title="Save changes" />
-                    <AppButton theme="simple" style={{ marginTop: rem(.5) }} labelStyle={{ color: 'white' }} title="Discard changes" onPress={() => navigation.goBack()} />
-                </Form>
-            </AvoidKeyboard>
-        </Screen>
+        <ScrollView style={{ height: '100%', backgroundColor: colors.dark500 }}>
+            <Screen>
+                <AvoidKeyboard behavior="padding">
+                    <AppTitle h="3" style={{ marginVertical: rem(2) }}>Edit profile</AppTitle>
+                    <Form
+                        onSubmit={handleSubmit}
+                        initialValues={ initialValues }
+                        validationSchema={ validationSchema }
+                    >
+                        <FormField
+                            name="username"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            placeholder="Username"
+                            textContextType="username"
+                        />
+                        <FormField
+                            name="email"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            keyboardType="email-address"
+                            placeholder="Email"
+                            textContextType="emailAddress"
+                        />
+                        <FormField
+                            name="firstname"
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            placeholder="Firstname"
+                            textContextType="firstname"
+                        />
+                        <FormField
+                            name="lastname"
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            placeholder="Firstname"
+                            textContextType="lastname"
+                        />
+                        <FormField
+                            name="address"
+                            autoCapitalize="none"
+                            autoCorrect={true}
+                            placeholder="Address"
+                            textContextType="streetAddressLine1"
+                        />
+                        <FormField
+                            name="zip"
+                            autoCapitalize="none"
+                            autoCorrect={true}
+                            placeholder="Zipcode"
+                            textContextType="postalCode"
+                            keyboardType="number-pad"
+                        />
+                        <FormSubmit title="Save changes" />
+                        <AppButton theme="simple" style={{ marginTop: rem(.5) }} labelStyle={{ color: 'white' }} title="Discard changes" onPress={() => navigation.goBack()} />
+                    </Form>
+                </AvoidKeyboard>
+            </Screen>
+        </ScrollView>
     );
 }
 
