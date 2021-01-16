@@ -34,18 +34,13 @@ function UserEditScreen(props) {
         return data;
     }
     
-    const handleSubmit = async data => {     
+    const handleSubmit = async ({ email, ...otherData}) => {     
         // navigation.goBack();         
-        const checkedData = removeUndefinedValues(data);
+        const checkedData = removeUndefinedValues(otherData);
         
         try {
-            // update sensitive data if edited
-            checkedData.password && await updatePassword(data.password)
-            checkedData.email && await updateEmail(data.email)
-            
-            // remove sensitive data
-            delete checkedData.email
-            delete checkedData.password
+            // update email if edited
+            email && await updateEmail(email)
                         
             await updateUserdata(checkedData)
             Toast.show({
@@ -58,10 +53,6 @@ function UserEditScreen(props) {
                 position: 'bottom'
             });
         }
-    }
-        
-    const updatePassword = async password => {
-        await auth.currentUser.updatePassword(password);
     }
     
     const updateEmail = async email => {
